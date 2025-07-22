@@ -4,7 +4,11 @@
 ![Cyberpunk Watchface Preview](concept-art/cyberpunk-watch.png)
 
 I tend not to like the watch faces that display too much data. But the Cyberpunk aesthetic makes data overload look cool.
-So to get that data overload and make it look good, I'm recreating the UI in one of my favorite games Cyberpunk 2077's.
+So to show all that data and make it look good, I'm recreating the UI in one of my favorite games Cyberpunk 2077's.
+This watch features an all encompasing weather widget that includes high and low temperature, weather, and chance of rain. 
+The health bar includes body battery in red, stepcount in yellow, and heartrate slots in cyan. 
+At the bottom you can find your current mission and which event that mission is for. 
+The ring of the watch features 24 hour markers with indicators for sunrise, sunset, and moon phase. 
 
 ## TODO:
 
