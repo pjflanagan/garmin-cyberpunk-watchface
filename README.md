@@ -24,3 +24,4 @@ This watch features:
 - Tutorial: https://medium.com/@JoshuaTheMiller/making-a-watchface-for-garmin-devices-8c3ce28cae08
 - 101: https://github.com/AndrewKhassapov/connect-iq 
 - Garmin Dev: https://developer.garmin.com/connect-iq/monkey-c/
+- Example: https://github.com/garmin/connectiq-apps/tree/master/watchfaces/DanceDanceGarmin

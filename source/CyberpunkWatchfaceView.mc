@@ -4,7 +4,7 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 
-class cyberpunk_watchfaceView extends WatchUi.WatchFace {
+class CyberpunkWatchfaceView extends WatchUi.WatchFace {
 
     function initialize() {
         WatchFace.initialize();

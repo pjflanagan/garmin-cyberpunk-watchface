@@ -1,4 +1,9 @@
 <layout id="WatchFace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <drawable class="Background" />
     <label id="TimeLabel" x="center" y="center" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_BLUE" />
+        <drawable id="Steps" class="Complicated.StepsDrawable">
+        <param name="locX">dc.getWidth() / 2 - 40</param>
+        <param name="locY">dc.getHeight() / 2</param>
+        <param name="width">200</param>
+    </drawable>
 </layout>

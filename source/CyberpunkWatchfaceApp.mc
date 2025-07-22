@@ -2,7 +2,7 @@ import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-class cyberpunk_watchfaceApp extends Application.AppBase {
+class CyberpunkWatchfaceApp extends Application.AppBase {
 
     function initialize() {
         AppBase.initialize();
@@ -18,7 +18,7 @@ class cyberpunk_watchfaceApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as [Views] or [Views, InputDelegates] {
-        return [ new cyberpunk_watchfaceView() ];
+        return [ new CyberpunkWatchfaceView() ];
     }
 
     // New app settings have been received so trigger a UI update
@@ -28,6 +28,6 @@ class cyberpunk_watchfaceApp extends Application.AppBase {
 
 }
 
-function getApp() as cyberpunk_watchfaceApp {
-    return Application.getApp() as cyberpunk_watchfaceApp;
+function getApp() as CyberpunkWatchfaceApp {
+    return Application.getApp() as CyberpunkWatchfaceApp;
 }
