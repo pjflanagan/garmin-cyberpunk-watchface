@@ -6,20 +6,22 @@ import Toybox.UserProfile;
 import Toybox.Activity;
 
 module Complicated {
+
+  // TODO: this should be one single model called HealthBarModel
   class HeartRateModel {
     public var _heartRate as Number or Null;
     public var _heartRateZone as Number;
 
     public function initialize() {
       _heartRate = 0;
-      _heartRateZone = 0;
+      _heartRateZone = 2;
     }
 
-    public function updateModel() as Void {
+    private function updateHeartRate() as Void {
       var activityInfo = Activity.getActivityInfo();
       if (activityInfo == null) {
         _heartRate = null;
-        _heartRateZone = 0;
+        _heartRateZone = 2;
         return;
       }
       _heartRate = activityInfo.currentHeartRate;
@@ -33,6 +35,11 @@ module Complicated {
       //   currentZone += 1;
       // }
       // _heartRateZone = heartRateZone;
+
+    }
+
+    public function updateModel() as Void {
+      updateHeartRate();
     }
   }
 }

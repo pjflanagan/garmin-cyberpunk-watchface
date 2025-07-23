@@ -16,7 +16,7 @@ module Complicated {
       _lookupTime = new Time.Duration(24 * 60 * 60);
       _maxValue = 0;
       _currentValue = 0;
-      _percent = 0;
+      _percent = 42;
     }
 
     public function updateModel() as Void {
@@ -29,7 +29,8 @@ module Complicated {
       if (latestSample != null) {
         _maxValue = bodyBattery.getMax() as Number;
         _currentValue = latestSample.data as Number;
-        _percent = min(_currentValue / (100 as Number), 100);
+        _percent = 42;
+        // _percent = min(_currentValue / (100 as Number), 100);
       }
     }
   }

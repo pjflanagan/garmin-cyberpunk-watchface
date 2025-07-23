@@ -45,12 +45,16 @@ module Complicated {
       var heartRateZone = _model._heartRateZone;
 
       // there will always be 5 heart rate zones
-      for (var i = 0; i < 5; i++) {
+      for (var i = 0; i < 10; i++) {
         var gap = i * 2;
         var x = _leftX + i * _slotWidth + gap;
-        var color = _color;
-        if (i > heartRateZone) {
-          color = _bg_color;
+
+        // 0 1 2 3 4 5 6 7 8 9
+        // 4 4 3 3 2 2 1 1 0 0
+        var slotHeartRateZone = 4 - Math.floor(i / 2);
+        var color = _bg_color;
+        if (slotHeartRateZone >= heartRateZone) {
+          color = _color;
         }
 
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
