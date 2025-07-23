@@ -3,6 +3,6 @@
     <drawable class="Background" />
     <drawable id="BodyBattery" class="Complicated.HealthBarDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">dc.getHeight() / 2 + 4</param>
+        <param name="y">dc.getHeight() / 2 + 24</param>
     </drawable>
 </layout>

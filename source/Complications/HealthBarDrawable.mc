@@ -45,7 +45,7 @@ module Complicated {
 
     private function drawLabel(dc as Dc) as Void {
       dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
-      dc.drawText(_x - _gap - _heartRateWidth, _y - 10, Graphics.FONT_TINY, "Health Indication", Graphics.TEXT_JUSTIFY_LEFT);
+      dc.drawText(_x - _gap - _heartRateWidth, _y - 10, Graphics.FONT_SYSTEM_TINY, "Health Indication", Graphics.TEXT_JUSTIFY_LEFT);
     }
 
     private function drawSteps(dc as Dc) as Void {
@@ -111,7 +111,7 @@ module Complicated {
         dc.drawText(
           x + _heartRateWidth / 2,
           _y + _heartRateWidth / 2,
-          Graphics.FONT_MEDIUM,
+          Graphics.FONT_SYSTEM_MEDIUM,
           heartRate,
           Graphics.TEXT_JUSTIFY_CENTER
         );
