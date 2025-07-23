@@ -20,7 +20,7 @@ This watch features:
 - [ ] Redraw the weather widget to include chance of rain
 - [ ] Start with the health bar
 
-
+- SDK Guide: https://developer.garmin.com/connect-iq/api-docs/Toybox/Time/Duration.html
 - Tutorial: https://medium.com/@JoshuaTheMiller/making-a-watchface-for-garmin-devices-8c3ce28cae08
 - 101: https://github.com/AndrewKhassapov/connect-iq 
 - Garmin Dev: https://developer.garmin.com/connect-iq/monkey-c/
