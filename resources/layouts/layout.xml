@@ -2,14 +2,14 @@
     <drawable class="Background" />
     <label id="TimeLabel" x="center" y="center" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_BLUE" />
     <drawable id="Steps" class="Complicated.StepsDrawable">
-        <param name="x">dc.getWidth() / 2 - 40</param>
+        <param name="x">dc.getWidth() / 2 - 54</param>
         <param name="y">dc.getHeight() / 2</param>
-        <param name="width">80</param>
+        <param name="width">120</param>
     </drawable>
     <drawable id="BodyBattery" class="Complicated.BodyBatteryDrawable">
-        <param name="x">dc.getWidth() / 2 - 40</param>
+        <param name="x">dc.getWidth() / 2 - 54</param>
         <param name="y">dc.getHeight() / 2 + 4</param>
-        <param name="width">80</param>
-        <param name="height">20</param>
+        <param name="width">120</param>
+        <param name="height">24</param>
     </drawable>
 </layout>
