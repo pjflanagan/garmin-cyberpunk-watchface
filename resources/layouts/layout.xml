@@ -12,4 +12,10 @@
         <param name="width">120</param>
         <param name="height">24</param>
     </drawable>
+    <drawable id="HeartRate" class="Complicated.HeartRateDrawable">
+        <param name="x">dc.getWidth() / 2 - 54</param>
+        <param name="y">dc.getHeight() / 2 + 4 + 24 + 4</param>
+        <param name="slotWidth">8</param>
+        <param name="height">24</param>
+    </drawable>
 </layout>
