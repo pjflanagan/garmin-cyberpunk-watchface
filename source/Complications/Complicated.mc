@@ -2,6 +2,17 @@ import Toybox.Lang;
 import Toybox.Graphics;
 
 module Complicated {
+
+  var BACKGROUND_RED = 0x180101;
+  var RED = 0xFF003C;
+  var DARK_RED = 0x570114;
+  var BLUE = 0x00F0FF;
+  var DARK_BLUE = 0x084A4F;
+  var YELLOW = 0xFCEE09;
+  var DARK_YELLOW = 0x504904;
+  var GREEN = 0x1ACB9B;
+
+
   function min(a as Number, b as Number) as Number {
     if (a < b) {
       return a;

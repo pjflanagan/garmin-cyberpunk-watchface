@@ -6,6 +6,7 @@ module Complicated {
   class HealthBarDrawable extends WatchUi.Drawable {
     private var _model as Complicated.HealthBarModel;
 
+    // _x is the left most point of the Step Bar
     private var _x as Number;
     private var _y as Number;
 
@@ -17,6 +18,7 @@ module Complicated {
     private var _gap = 2;
     private var _heartRateWidth =
       _stepHeight + _bodyBatteryHeight + _slotHeight;
+    private var _fullWidth = _barWidth + _gap + _heartRateWidth;
 
     public function initialize(
       params as
@@ -28,8 +30,9 @@ module Complicated {
     ) {
       _model = new Complicated.HealthBarModel();
 
-      _x = params[:x];
+      var centerX = params[:x];
       _y = params[:y];
+      _x = centerX - (_barWidth / 2);
 
       var options = {
         :x => params[:x],
@@ -40,15 +43,20 @@ module Complicated {
       Drawable.initialize(options);
     }
 
+    private function drawLabel(dc as Dc) as Void {
+      dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(_x - _gap - _heartRateWidth, _y - 10, Graphics.FONT_TINY, "Health Indication", Graphics.TEXT_JUSTIFY_LEFT);
+    }
+
     private function drawSteps(dc as Dc) as Void {
       var percent = _model._stepsPercent;
       var percentWidth = (_barWidth * percent) / 100;
-      var color = Graphics.COLOR_YELLOW;
+      var color = YELLOW;
       if (percent >= 100) {
-        color = Graphics.COLOR_GREEN;
+        color = GREEN;
       }
 
-      dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(DARK_YELLOW, Graphics.COLOR_TRANSPARENT);
       dc.fillRectangle(_x, _y, _barWidth, _stepHeight);
       dc.setColor(color, Graphics.COLOR_TRANSPARENT);
       dc.fillRectangle(_x, _y, percentWidth, _stepHeight);
@@ -59,9 +67,9 @@ module Complicated {
       var percent = _model._currentBodyBatteryPercent;
       var percentWidth = (_barWidth * percent) / 100;
 
-      dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
       dc.fillRectangle(_x, Y, _barWidth, _bodyBatteryHeight);
-      dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
       dc.fillRectangle(_x, Y, percentWidth, _bodyBatteryHeight);
     }
 
@@ -78,9 +86,9 @@ module Complicated {
         // 0 1 2 3 4 5 6 7 8 9
         // 4 4 3 3 2 2 1 1 0 0
         var slotHeartRateZone = 4 - Math.floor(i / 2);
-        var color = Graphics.COLOR_DK_BLUE;
+        var color = DARK_BLUE;
         if (slotHeartRateZone >= heartRateZone) {
-          color = Graphics.COLOR_BLUE;
+          color = BLUE;
         }
 
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
@@ -91,15 +99,15 @@ module Complicated {
     private function drawHeartRate(dc as Dc) as Void {
       var x = _x - _heartRateWidth - _gap;
 
-      dc.setColor(Graphics.COLOR_DK_BLUE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(DARK_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.fillRectangle(x, _y, _heartRateWidth, _heartRateWidth);
-      dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(BLUE, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(2);
       dc.drawRectangle(x, _y, _heartRateWidth, _heartRateWidth);
 
       var heartRate = _model._heartRate;
       if (heartRate != null) {
-        dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(BLUE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
           x + _heartRateWidth / 2,
           _y + _heartRateWidth / 2,
@@ -112,6 +120,7 @@ module Complicated {
 
     public function draw(dc as Dc) as Void {
       _model.updateModel();
+      drawLabel(dc);
       drawHeartRate(dc);
       drawSteps(dc);
       drawBodyBattery(dc);

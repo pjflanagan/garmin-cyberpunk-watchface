@@ -2,7 +2,7 @@
     <label id="TimeLabel" x="center" y="center" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <drawable class="Background" />
     <drawable id="BodyBattery" class="Complicated.HealthBarDrawable">
-        <param name="x">dc.getWidth() / 2 - 54</param>
+        <param name="x">dc.getWidth() / 2</param>
         <param name="y">dc.getHeight() / 2 + 4</param>
     </drawable>
 </layout>
