@@ -24,10 +24,17 @@ module Complicated {
       _currentBodyBatteryValue = 0;
       _currentBodyBatteryPercent = 42;
 
-      _heartRate = 0;
+      _heartRate = 64;
       _heartRateZone = 2;
 
       _stepsPercent = 0;
+    }
+
+    public function updateSteps() as Void {
+      var info = ActivityMonitor.getInfo();
+      var goalPercent =
+        ((info.steps.toFloat() / info.stepGoal.toFloat()) * 100) as Number;
+      _stepsPercent = min(goalPercent, 100);
     }
 
     private function updateBodyBattery() as Void {
@@ -48,7 +55,7 @@ module Complicated {
     private function updateHeartRate() as Void {
       var activityInfo = Activity.getActivityInfo();
       if (activityInfo == null) {
-        _heartRate = null;
+        _heartRate = 64;
         _heartRateZone = 2;
         return;
       }
@@ -63,13 +70,6 @@ module Complicated {
       //   currentZone += 1;
       // }
       // _heartRateZone = heartRateZone;
-    }
-
-    public function updateSteps() as Void {
-      var info = ActivityMonitor.getInfo();
-      var goalPercent =
-        ((info.steps.toFloat() / info.stepGoal.toFloat()) * 100) as Number;
-      _stepsPercent = min(goalPercent, 100);
     }
 
     public function updateModel() as Void {

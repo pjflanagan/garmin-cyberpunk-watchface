@@ -10,11 +10,13 @@ module Complicated {
     private var _y as Number;
 
     private var _stepHeight = 3;
-    private var _bodyBatteryHeight = 24;
-    private var _gap = 2;
+    private var _bodyBatteryHeight = 3 * 3;
     private var _barWidth = 120;
-    private var _slotHeight = 28;
-    private var _slotWidth = 6;
+    private var _slotHeight = 3 * 4;
+    private var _slotWidth = 4;
+    private var _gap = 2;
+    private var _heartRateWidth =
+      _stepHeight + _bodyBatteryHeight + _slotHeight;
 
     public function initialize(
       params as
@@ -38,17 +40,33 @@ module Complicated {
       Drawable.initialize(options);
     }
 
+    private function drawSteps(dc as Dc) as Void {
+      var percent = _model._stepsPercent;
+      var percentWidth = (_barWidth * percent) / 100;
+      var color = Graphics.COLOR_YELLOW;
+      if (percent >= 100) {
+        color = Graphics.COLOR_GREEN;
+      }
+
+      dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
+      dc.fillRectangle(_x, _y, _barWidth, _stepHeight);
+      dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+      dc.fillRectangle(_x, _y, percentWidth, _stepHeight);
+    }
+
     private function drawBodyBattery(dc as Dc) as Void {
+      var Y = _y + _stepHeight + _gap;
       var percent = _model._currentBodyBatteryPercent;
       var percentWidth = (_barWidth * percent) / 100;
 
       dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(_x, _y, _barWidth, _bodyBatteryHeight);
+      dc.fillRectangle(_x, Y, _barWidth, _bodyBatteryHeight);
       dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(_x, _y, percentWidth, _bodyBatteryHeight);
+      dc.fillRectangle(_x, Y, percentWidth, _bodyBatteryHeight);
     }
 
-    private function drawHeartRate(dc as Dc) as Void {
+    private function drawHeartRateSlots(dc as Dc) as Void {
+      var Y = _y + _stepHeight + _gap + _bodyBatteryHeight + _gap;
       // var percent = _model._heartRate;
       var heartRateZone = _model._heartRateZone;
 
@@ -66,31 +84,38 @@ module Complicated {
         }
 
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle(x, _y, _slotWidth, _slotHeight);
+        dc.fillRectangle(x, Y, _slotWidth, _slotHeight);
       }
     }
 
-    public function drawSteps(dc as Dc) as Void {
+    private function drawHeartRate(dc as Dc) as Void {
+      var x = _x - _heartRateWidth - _gap;
 
-      var percent = _model._stepsPercent;
-      var percentWidth = (_barWidth * percent) / 100;
-      var color = Graphics.COLOR_YELLOW;
-      if (percent >= 100) {
-        color = Graphics.COLOR_GREEN;
-      }
-
+      dc.setColor(Graphics.COLOR_DK_BLUE, Graphics.COLOR_TRANSPARENT);
+      dc.fillRectangle(x, _y, _heartRateWidth, _heartRateWidth);
+      dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(2);
-      dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
-      dc.drawLine(_x, _y, _x + _barWidth, _y);
-      dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_TRANSPARENT);
-      dc.drawLine(_x, _y, _x + percentWidth, _y);
+      dc.drawRectangle(x, _y, _heartRateWidth, _heartRateWidth);
+
+      var heartRate = _model._heartRate;
+      if (heartRate != null) {
+        dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(
+          x + _heartRateWidth / 2,
+          _y + _heartRateWidth / 2,
+          Graphics.FONT_MEDIUM,
+          heartRate,
+          Graphics.TEXT_JUSTIFY_CENTER
+        );
+      }
     }
 
     public function draw(dc as Dc) as Void {
       _model.updateModel();
-      drawBodyBattery(dc);
       drawHeartRate(dc);
       drawSteps(dc);
+      drawBodyBattery(dc);
+      drawHeartRateSlots(dc);
     }
   }
 }
