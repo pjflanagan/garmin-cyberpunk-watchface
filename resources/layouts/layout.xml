@@ -1,6 +1,11 @@
 <layout id="WatchFace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <label id="TimeLabel" x="center" y="center" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <drawable class="Background" />
+    <drawable id="HourRing" class="Complicated.HourRingDrawable">
+        <param name="x">dc.getWidth() / 2</param>
+        <param name="y">dc.getHeight() / 2</param>
+        <param name="radius">dc.getWidth() / 2</param>
+    </drawable>
     <drawable id="BodyBattery" class="Complicated.HealthBarDrawable">
         <param name="x">dc.getWidth() / 2</param>
         <param name="y">dc.getHeight() / 2 + 24</param>

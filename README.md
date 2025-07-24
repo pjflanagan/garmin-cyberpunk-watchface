@@ -20,6 +20,9 @@ This watch features:
 - [ ] Redraw the weather widget to include chance of rain
 - [ ] Start with the health bar
 
+- https://github.com/desyat/OpenWeatherMapWidget/tree/master/Open%20Weather%20Widget/resources/drawables
+- https://github.com/sunpazed/garmin-iconfonts
+- https://developer.garmin.com/connect-iq/connect-iq-basics/your-first-app/
 - SDK Guide: https://developer.garmin.com/connect-iq/api-docs/Toybox/Time/Duration.html
 - Tutorial: https://medium.com/@JoshuaTheMiller/making-a-watchface-for-garmin-devices-8c3ce28cae08
 - 101: https://github.com/AndrewKhassapov/connect-iq 
