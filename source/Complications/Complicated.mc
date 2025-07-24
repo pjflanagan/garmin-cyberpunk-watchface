@@ -10,7 +10,7 @@ module Complicated {
   var DARK_BLUE = 0x084A4F;
   var YELLOW = 0xFCEE09;
   var DARK_YELLOW = 0x504904;
-  var GREEN = 0x1ACB9B;
+  var GREEN = 0x29F491;
 
 
   function min(a as Number, b as Number) as Number {
