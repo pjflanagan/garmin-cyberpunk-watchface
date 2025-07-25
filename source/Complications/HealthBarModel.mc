@@ -20,12 +20,12 @@ module Complicated {
 
     public function initialize() {
       _lookupTime = new Time.Duration(24 * 60 * 60);
+      
       _maxBodyBatteryValue = 0;
       _currentBodyBatteryValue = 0;
       _currentBodyBatteryPercent = 42;
 
-      _heartRate = 64;
-      _heartRateZone = 2;
+      _heartRateZone = 0;
 
       _stepsPercent = 0;
     }
@@ -55,21 +55,24 @@ module Complicated {
     private function updateHeartRate() as Void {
       var activityInfo = Activity.getActivityInfo();
       if (activityInfo == null) {
-        _heartRate = 64;
-        _heartRateZone = 2;
         return;
       }
       _heartRate = activityInfo.currentHeartRate;
 
-      // var heartRateZones = UserProfile.getHeartRateZones(UserProfile.HR_ZONE_SPORT_GENERIC);
+      if (_heartRate == null) {
+        return;
+      }
 
-      // var currentZone = 0;
-      // var heartRateZone = 0;
-      // while (currentZone < heartRateZones.size() && _heartRate > heartRateZones[currentZone]) {
-      //   heartRateZone = currentZone;
-      //   currentZone += 1;
-      // }
-      // _heartRateZone = heartRateZone;
+      var heartRateZones = UserProfile.getHeartRateZones(UserProfile.HR_ZONE_SPORT_GENERIC);
+
+      var currentHeartRateZone = 0;
+      for (var i = 0 ; i < heartRateZones.size(); i++) {
+        if (_heartRate < heartRateZones[i]) {
+          break;
+        }
+        currentHeartRateZone = i;
+      }
+      _heartRateZone = currentHeartRateZone;
     }
 
     public function updateModel() as Void {

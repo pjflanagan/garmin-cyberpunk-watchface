@@ -12,8 +12,8 @@ module Complicated {
     private var _radius as Number;
 
     private const _gapDegrees = 2;
-    private const _segmentWidth = 4;
-    private const _currentHourSegmentWidth = 8;
+    private const _segmentWidth = 3;
+    private const _segmentFullWidth = 6;
 
     public function initialize(
       params as
@@ -51,9 +51,14 @@ module Complicated {
       var endAngle = getHourAngle(hour + 1) + _gapDegrees / 2;
       var percentOfHour = _model._minuteOfHour / 60.0;
 
-      dc.setPenWidth(_segmentWidth * 2); // half ends up off the display, so multiply by 2
+      // always draw a thick ting
+      dc.setPenWidth(_segmentFullWidth * 2); // use the current hour segment width, again multiply by 2
+      dc.setColor(Complicated.DARK_RED, Graphics.COLOR_TRANSPARENT);
+      dc.drawArc(_x, _y, _radius, Graphics.ARC_CLOCKWISE, startAngle, endAngle);
+
       if (hour < _model._hourOfDay) {
         dc.setColor(Complicated.RED, Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(_segmentWidth * 2); // half ends up off the display, so multiply by 2
         dc.drawArc(
           _x,
           _y,
@@ -63,10 +68,10 @@ module Complicated {
           endAngle
         );
       } else if (hour == _model._hourOfDay) {
-        dc.setPenWidth(_currentHourSegmentWidth * 2); // use the current hour segment width, again multiply by 2
         var angleDiff = (endAngle - startAngle) * percentOfHour;
 
         dc.setColor(Complicated.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(_segmentFullWidth * 2); // use the current hour segment width, again multiply by 2
         dc.drawArc(
           _x,
           _y,
@@ -79,6 +84,7 @@ module Complicated {
         if (angleDiff < -0.01) {
           var minuteEndAngle = startAngle + angleDiff;
           dc.setColor(Complicated.BLUE, Graphics.COLOR_TRANSPARENT);
+          dc.setPenWidth(_segmentWidth * 2); // half ends up off the display, so multiply by 2
           dc.drawArc(
             _x,
             _y,
@@ -88,16 +94,6 @@ module Complicated {
             minuteEndAngle
           );
         }
-      } else {
-        dc.setColor(Complicated.DARK_RED, Graphics.COLOR_TRANSPARENT);
-        dc.drawArc(
-          _x,
-          _y,
-          _radius,
-          Graphics.ARC_CLOCKWISE,
-          startAngle,
-          endAngle
-        );
       }
     }
 
