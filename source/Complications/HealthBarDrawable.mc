@@ -28,7 +28,6 @@ module Complicated {
 
     private var _fullWidth =
       _iconWidth + _heartRateWidth + _barWidth + 2 * _textWidth + 4 * _gap;
-    private var _halfWidth = _fullWidth / 2;
 
     public function initialize(
       params as
@@ -54,6 +53,7 @@ module Complicated {
     }
 
     private function drawLabel(dc as Dc) as Void {
+      // TODO: make all of these X and Y values properties and set them in the initialize function
       var X = _x + _iconWidth + _gap;
       dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
