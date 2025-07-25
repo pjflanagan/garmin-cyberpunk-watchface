@@ -59,7 +59,7 @@ module Complicated {
       dc.drawText(
         X,
         _y - 10,
-        Graphics.FONT_XTINY,
+        Graphics.FONT_AUX1,
         "Health Indication",
         Graphics.TEXT_JUSTIFY_LEFT
       );

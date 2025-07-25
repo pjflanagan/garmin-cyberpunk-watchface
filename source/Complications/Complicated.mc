@@ -12,6 +12,7 @@ module Complicated {
   var YELLOW = 0xFCEE09;
   var DARK_YELLOW = 0x504904;
   var GREEN = 0x29F491;
+  var WHITE = Graphics.COLOR_WHITE;
 
 
   function min(a as Number, b as Number) as Number {
@@ -19,6 +20,14 @@ module Complicated {
       return a;
     } else {
       return b;
+    }
+  }
+
+  function abs(a as Number) as Number {
+    if (a < 0) {
+      return -a;
+    } else {
+      return a;
     }
   }
 }

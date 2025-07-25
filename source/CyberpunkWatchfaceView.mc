@@ -23,21 +23,6 @@ class CyberpunkWatchfaceView extends WatchUi.WatchFace {
 
     // Update the view
     function onUpdate(dc as Dc) as Void {
-        // Get the current time and format it correctly
-        var timeFormat = "$1$:$2$";
-        var clockTime = System.getClockTime();
-        var hours = clockTime.hour;
-        if (hours > 12) {
-            hours = hours - 12;
-        }
-        var timeString = Lang.format(timeFormat, [hours, clockTime.min.format("%02d")]);
-
-        // Update the view
-        var view = View.findDrawableById("TimeLabel") as Text;
-        view.setColor(Application.Properties.getValue("ForegroundColor") as Number);
-        view.setText(timeString);
-
-        // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
     }
 

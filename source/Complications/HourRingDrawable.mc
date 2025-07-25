@@ -68,7 +68,8 @@ module Complicated {
           endAngle
         );
       } else if (hour == _model._hourOfDay) {
-        var angleDiff = (endAngle - startAngle) * percentOfHour;
+        var angleDiff =
+          -1 * Complicated.abs(endAngle - startAngle) * percentOfHour;
 
         dc.setColor(Complicated.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(_segmentFullWidth * 2); // use the current hour segment width, again multiply by 2
@@ -80,20 +81,19 @@ module Complicated {
           startAngle,
           endAngle
         );
-        // do not display if the angle is a positive number, it will draw backward
-        if (angleDiff < -0.01) {
-          var minuteEndAngle = startAngle + angleDiff;
-          dc.setColor(Complicated.BLUE, Graphics.COLOR_TRANSPARENT);
-          dc.setPenWidth(_segmentWidth * 2); // half ends up off the display, so multiply by 2
-          dc.drawArc(
-            _x,
-            _y,
-            _radius,
-            Graphics.ARC_CLOCKWISE,
-            startAngle,
-            minuteEndAngle
-          );
-        }
+
+        // FIXME: TODO: 6pm does not work for the minutes, it's because it is being drawn backward the whole time
+        var minuteEndAngle = startAngle + angleDiff;
+        dc.setColor(Complicated.BLUE, Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(_segmentWidth * 2); // half ends up off the display, so multiply by 2
+        dc.drawArc(
+          _x,
+          _y,
+          _radius,
+          Graphics.ARC_CLOCKWISE,
+          startAngle,
+          minuteEndAngle
+        );
       }
     }
 
