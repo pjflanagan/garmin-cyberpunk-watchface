@@ -49,13 +49,13 @@ module Complicated {
     private function drawRingSegment(dc as Dc, hour as Number) as Void {
       var startAngle = getHourAngle(hour) - _gapDegrees / 2;
       var endAngle = getHourAngle(hour + 1) + _gapDegrees / 2;
-      var percentOfHour = _model._minuteOfHour / 60.0;
 
-      // always draw a thick ting
+      // draw a thick line for every hour of the day
       dc.setPenWidth(_segmentFullWidth * 2); // use the current hour segment width, again multiply by 2
       dc.setColor(Complicated.DARK_RED, Graphics.COLOR_TRANSPARENT);
       dc.drawArc(_x, _y, _radius, Graphics.ARC_CLOCKWISE, startAngle, endAngle);
 
+      // draw a past hour with a thin red line
       if (hour < _model._hourOfDay) {
         dc.setColor(Complicated.RED, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(_segmentWidth * 2); // half ends up off the display, so multiply by 2
@@ -67,10 +67,11 @@ module Complicated {
           startAngle,
           endAngle
         );
-      } else if (hour == _model._hourOfDay) {
-        var angleDiff =
-          -1 * Complicated.abs(endAngle - startAngle) * percentOfHour;
-
+        return;
+      } 
+      
+      // draw the current hour in blue
+      if (hour == _model._hourOfDay) {
         dc.setColor(Complicated.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(_segmentFullWidth * 2); // use the current hour segment width, again multiply by 2
         dc.drawArc(
@@ -82,8 +83,19 @@ module Complicated {
           endAngle
         );
 
-        // FIXME: TODO: 6pm does not work for the minutes, it's because it is being drawn backward the whole time
-        var minuteEndAngle = startAngle + angleDiff;
+        var percentOfHour = _model._minuteOfHour / 60.0;
+        if (percentOfHour == 0) {
+          // do not attempt to draw the minutes if there are none
+          return;
+        }
+
+        if (startAngle < 0) {
+          startAngle = startAngle +360;
+        }
+
+        var segmentDegrees = Complicated.abs(startAngle - endAngle);
+        var minuteDegrees = segmentDegrees * percentOfHour;
+        var minuteEndAngle = startAngle - minuteDegrees;
         dc.setColor(Complicated.BLUE, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(_segmentWidth * 2); // half ends up off the display, so multiply by 2
         dc.drawArc(

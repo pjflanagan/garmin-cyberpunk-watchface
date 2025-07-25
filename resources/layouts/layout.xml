@@ -1,6 +1,4 @@
 <layout id="WatchFace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
-<!-- TODO: when I make my own custom TimeLabel it will be best to make the colon blink to show some movement -->
-    <label id="TimeLabel" x="center" y="center" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <drawable class="Background" />
     <drawable id="HourRing" class="Complicated.HourRingDrawable">
         <param name="x">dc.getWidth() / 2</param>

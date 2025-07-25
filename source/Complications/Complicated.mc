@@ -23,7 +23,7 @@ module Complicated {
     }
   }
 
-  function abs(a as Number) as Number {
+  function abs(a as Number or Float) as Number or Float {
     if (a < 0) {
       return -a;
     } else {
