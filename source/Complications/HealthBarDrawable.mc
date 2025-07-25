@@ -59,8 +59,8 @@ module Complicated {
       dc.drawText(
         X,
         _y - 10,
-        Graphics.FONT_AUX1,
-        "Health Indication",
+        Graphics.FONT_SYSTEM_XTINY,
+        "HEALTH INDICATION",
         Graphics.TEXT_JUSTIFY_LEFT
       );
     }
@@ -143,7 +143,7 @@ module Complicated {
 
     public function draw(dc as Dc) as Void {
       _model.updateModel();
-      drawLabel(dc);
+      // drawLabel(dc);
       drawHeartRate(dc);
       drawSteps(dc);
       drawBodyBattery(dc);

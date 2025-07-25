@@ -90,7 +90,7 @@ module Complicated {
         }
 
         if (startAngle < 0) {
-          startAngle = startAngle +360;
+          startAngle = startAngle + 360;
         }
 
         var segmentDegrees = Complicated.abs(startAngle - endAngle);

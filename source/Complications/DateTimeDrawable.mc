@@ -25,8 +25,8 @@ module Complicated {
       _y = params[:y];
       _x = params[:x];
 
-      _dateCenter = _x + 60;
-      _timeCenter = _x - 90;
+      _dateCenter = _x + 40;
+      _timeCenter = _x - 52;
 
       var options = {
         :x => params[:x],
@@ -41,15 +41,15 @@ module Complicated {
       dc.setColor(Complicated.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _dateCenter,
-        _y,
+        _y + 7,
         Graphics.FONT_SYSTEM_SMALL,
         _model._month,
         Graphics.TEXT_JUSTIFY_RIGHT
       );
       dc.setColor(Complicated.WHITE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
-        _dateCenter + 2,
-        _y,
+        _dateCenter + 4,
+        _y + 7,
         Graphics.FONT_SYSTEM_SMALL,
         _model._dayOfMonth,
         Graphics.TEXT_JUSTIFY_LEFT
@@ -59,18 +59,39 @@ module Complicated {
     public function drawTime(dc as Dc) as Void {
       dc.setColor(Complicated.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
-        _timeCenter,
+        _timeCenter - 5,
         _y,
-        Graphics.FONT_SYSTEM_MEDIUM,
-        _model._hour,
+        Graphics.FONT_SYSTEM_LARGE,
+        _model._displayHour,
         Graphics.TEXT_JUSTIFY_RIGHT
       );
+      // to make the colon blink, we only show it on even seconds
+      var colonColor = Complicated.DARK_BLUE;
+      if (_model._secondOfMinute % 2 == 0) {
+        colonColor = Complicated.DARKER_BLUE;
+      }
       dc.setColor(Complicated.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
-        _timeCenter + 2,
+        _timeCenter,
+        _y + 6,
+        Graphics.FONT_SYSTEM_SMALL,
+        ":",
+        Graphics.TEXT_JUSTIFY_RIGHT
+      );
+      dc.setColor(Complicated.WHITE, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(
+        _timeCenter + 3,
         _y,
-        Graphics.FONT_SYSTEM_MEDIUM,
-        _model._minuteOfHour,
+        Graphics.FONT_SYSTEM_LARGE,
+        _model._displayMinute,
+        Graphics.TEXT_JUSTIFY_LEFT
+      );
+      dc.setColor(Complicated.DARK_WHITE, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(
+        _timeCenter + 38,
+        _y + 16,
+        Graphics.FONT_SYSTEM_XTINY,
+        _model._amOrPm,
         Graphics.TEXT_JUSTIFY_LEFT
       );
     }
@@ -78,6 +99,7 @@ module Complicated {
     public function draw(dc as Dc) as Void {
       _model.updateModel();
       drawDate(dc);
+      drawTime(dc);
     }
   }
 }

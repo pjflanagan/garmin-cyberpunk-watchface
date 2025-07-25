@@ -9,10 +9,12 @@ module Complicated {
   var DARK_RED = 0x570114;
   var BLUE = 0x00F0FF;
   var DARK_BLUE = 0x084A4F;
+  var DARKER_BLUE = 0x04373B;
   var YELLOW = 0xFCEE09;
   var DARK_YELLOW = 0x504904;
   var GREEN = 0x29F491;
   var WHITE = Graphics.COLOR_WHITE;
+  var DARK_WHITE = 0xBFBFBF;
 
 
   function min(a as Number, b as Number) as Number {
