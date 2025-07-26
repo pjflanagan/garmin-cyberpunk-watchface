@@ -22,7 +22,7 @@ module Complicated {
     private var _heartRateStrokeWidth = 1;
 
     private var _iconWidth = 8;
-    private var _textWidth = 12;
+    private var _textWidth = 16;
 
     private var _gap = 2;
 
@@ -85,13 +85,43 @@ module Complicated {
       var X = _x + _iconWidth + _heartRateWidth + 2 * _gap;
       var Y = _y + _stepHeight + _gap;
 
-      var percent = _model._currentBodyBatteryPercent;
+      var percent = _model._currentBodyBatteryValue;
       var percentWidth = (_barWidth * percent) / 100;
 
       dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
       dc.fillRectangle(X, Y, _barWidth, _bodyBatteryHeight);
       dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
       dc.fillRectangle(X, Y, percentWidth, _bodyBatteryHeight);
+    }
+
+    private function drawBodyBatteryLabel(dc as Dc) as Void {
+      var X = _x + _iconWidth + _heartRateWidth + _barWidth + 3 * _gap;
+
+      var bodyBattery = "-";
+      if (_model._currentBodyBatteryValue != null) {
+        bodyBattery = _model._currentBodyBatteryValue.format("%d");
+      }
+      dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(
+        X,
+        _y,
+        Graphics.FONT_SYSTEM_XTINY,
+        bodyBattery,
+        Graphics.TEXT_JUSTIFY_LEFT
+      );
+
+      var maxBodyBattery = "-";
+      if (_model._maxBodyBatteryValue != null) {
+        maxBodyBattery = _model._maxBodyBatteryValue.format("%d");
+      }
+      dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(
+        X + _gap + _textWidth,
+        _y,
+        Graphics.FONT_SYSTEM_XTINY,
+        maxBodyBattery,
+        Graphics.TEXT_JUSTIFY_LEFT
+      );
     }
 
     private function drawHeartRateSlots(dc as Dc) as Void {
@@ -147,6 +177,7 @@ module Complicated {
       drawHeartRate(dc);
       drawSteps(dc);
       drawBodyBattery(dc);
+      drawBodyBatteryLabel(dc);
       drawHeartRateSlots(dc);
     }
   }

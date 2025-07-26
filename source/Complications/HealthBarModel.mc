@@ -9,9 +9,8 @@ module Complicated {
   class HealthBarModel {
     private var _lookupTime as Time.Duration;
 
-    public var _maxBodyBatteryValue as Number;
-    public var _currentBodyBatteryValue as Number;
-    public var _currentBodyBatteryPercent as Number;
+    public var _maxBodyBatteryValue as Number?;
+    public var _currentBodyBatteryValue as Number?;
 
     public var _heartRate as Number?;
     public var _heartRateZone as Number;
@@ -21,12 +20,7 @@ module Complicated {
     public function initialize() {
       _lookupTime = new Time.Duration(24 * 60 * 60);
       
-      _maxBodyBatteryValue = 0;
-      _currentBodyBatteryValue = 0;
-      _currentBodyBatteryPercent = 42;
-
       _heartRateZone = 0;
-
       _stepsPercent = 0;
     }
 
@@ -47,7 +41,6 @@ module Complicated {
       if (latestSample != null) {
         _maxBodyBatteryValue = bodyBattery.getMax() as Number;
         _currentBodyBatteryValue = latestSample.data as Number;
-        _currentBodyBatteryPercent = min(_currentBodyBatteryValue / 100 as Number, 100);
       }
     }
 
