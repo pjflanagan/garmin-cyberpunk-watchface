@@ -47,8 +47,7 @@ module Complicated {
       if (latestSample != null) {
         _maxBodyBatteryValue = bodyBattery.getMax() as Number;
         _currentBodyBatteryValue = latestSample.data as Number;
-        _currentBodyBatteryPercent = 42;
-        // _percent = min(_currentValue / (100 as Number), 100);
+        _currentBodyBatteryPercent = min(_currentBodyBatteryValue / 100 as Number, 100);
       }
     }
 

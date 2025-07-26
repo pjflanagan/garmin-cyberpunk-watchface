@@ -128,17 +128,17 @@ module Complicated {
       dc.setPenWidth(_heartRateStrokeWidth);
       dc.drawRectangle(X, _y, _heartRateWidth, _heartRateWidth);
 
-      var heartRate = _model._heartRate;
-      if (heartRate != null) {
-        dc.setColor(BLUE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(
-          X + _heartRateWidth / 2,
-          _y + _heartRateWidth / 2,
-          Graphics.FONT_MEDIUM,
-          heartRate,
-          Graphics.TEXT_JUSTIFY_CENTER
-        );
+      var heartRate = "-";
+      if (_model._heartRate != null) {
+        heartRate = _model._heartRate.format("%d");
       }
+      dc.drawText(
+        X + _heartRateWidth / 2,
+        _y + _heartRateWidth / 2 - 10,
+        Graphics.FONT_SYSTEM_XTINY,
+        heartRate,
+        Graphics.TEXT_JUSTIFY_CENTER
+      );
     }
 
     public function draw(dc as Dc) as Void {
