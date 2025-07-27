@@ -2,9 +2,9 @@ import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
 
-module Complicated {
+module Cyberpunk {
   class HealthBarDrawable extends WatchUi.Drawable {
-    private var _model as Complicated.HealthBarModel;
+    private var _model as Cyberpunk.HealthBarModel;
 
     // _x is the left most point
     private var _x as Number;
@@ -42,7 +42,7 @@ module Complicated {
           :y as Numeric,
         }
     ) {
-      _model = new Complicated.HealthBarModel();
+      _model = new Cyberpunk.HealthBarModel();
 
       var centerX = params[:x];
       _y = params[:y];

@@ -6,7 +6,7 @@ import Toybox.System;
 import Toybox.Time;
 import Toybox.Complications;
 
-module Complicated {
+module Cyberpunk {
   class HourRingModel {
     public var _hourOfDay as Number; //[0, 23]
     public var _minuteOfHour as Number; //[0, 59]

@@ -3,18 +3,24 @@ import Toybox.SensorHistory;
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.Complications;
+import Toybox.UserProfile;
 
-module Complicated {
+module Cyberpunk {
   class ActivityModel {
+    // using the cyberpunk nomenclature to make it clear what is going on
     public var _isComplete as Boolean;
-    public var _eventName as String?;
-    public var _activityName as String?;
+    public var _displayStoryline as String;
+    public var _displayMission as String;
+    public var _displayMissionDetail as String?;
 
     public var _trainingStatusComplicationId as Complications.Id?;
 
     public function initialize() {
       _isComplete = false;
+      _displayStoryline = "-";
+      _displayMission = "-";
 
+      // COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE
       _trainingStatusComplicationId = new Complications.Id(
         Complications.COMPLICATION_TYPE_TRAINING_STATUS
       );
@@ -27,10 +33,29 @@ module Complicated {
 
     public function onComplicationChanged(id as Complications.Id) as Void {
       if (id.equals(_trainingStatusComplicationId)) {
-        _activityName = Complications.getComplication(id).value;
+        var trainingStatus = Complications.getComplication(id).value;
+        if (trainingStatus != null) {
+          _displayStoryline = trainingStatus.toUpper();
+        } else {
+          _displayStoryline = "TRAINING";
+        }
       }
     }
 
-    public function updateModel() as Void {}
+    public function updateModel() as Void {
+      var userActivity = UserProfile.getUserActivityHistory();
+      var lastActivity = userActivity.next();
+
+      var startTime = lastActivity.startTime;
+      if (startTime.greaterThan(Time.today())) {
+        _isComplete = true;
+        _displayMission = lastActivity.type + " " + lastActivity.distance;
+        _displayMissionDetail = lastActivity.duration;
+      } else {
+        // TODO: what do we display if this is false
+        _isComplete = false;
+        _displayMission = lastActivity.type.toString();
+      }
+    }
   }
 }

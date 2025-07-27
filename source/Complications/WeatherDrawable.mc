@@ -2,9 +2,9 @@ import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
 
-module Complicated {
+module Cyberpunk {
   class WeatherDrawable extends WatchUi.Drawable {
-    private var _model as Complicated.WeatherModel;
+    private var _model as Cyberpunk.WeatherModel;
 
     private var _x as Number;
     private var _y as Number;
@@ -20,7 +20,7 @@ module Complicated {
           :radius as Numeric,
         }
     ) {
-      _model = new Complicated.WeatherModel();
+      _model = new Cyberpunk.WeatherModel();
       _y = params[:y];
       _x = params[:x];
 

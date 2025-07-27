@@ -5,7 +5,7 @@ import Toybox.Graphics;
 import Toybox.System;
 import Toybox.Time;
 
-module Complicated {
+module Cyberpunk {
   class HealthBarModel {
     private var _lookupTime as Time.Duration;
 

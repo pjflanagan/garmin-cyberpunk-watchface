@@ -2,9 +2,9 @@ import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
 
-module Complicated {
+module Cyberpunk {
   class DateTimeDrawable extends WatchUi.Drawable {
-    private var _model as Complicated.DateTimeModel;
+    private var _model as Cyberpunk.DateTimeModel;
 
     private var _x as Number;
     private var _y as Number;
@@ -21,7 +21,7 @@ module Complicated {
           :radius as Numeric,
         }
     ) {
-      _model = new Complicated.DateTimeModel();
+      _model = new Cyberpunk.DateTimeModel();
       _y = params[:y];
       _x = params[:x];
 
@@ -38,7 +38,7 @@ module Complicated {
     }
 
     public function drawDate(dc as Dc) as Void {
-      dc.setColor(Complicated.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(Cyberpunk.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _dateCenter,
         _y + 7,
@@ -46,7 +46,7 @@ module Complicated {
         _model._month,
         Graphics.TEXT_JUSTIFY_RIGHT
       );
-      dc.setColor(Complicated.WHITE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(Cyberpunk.WHITE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _dateCenter + 4,
         _y + 7,
@@ -57,7 +57,7 @@ module Complicated {
     }
 
     public function drawTime(dc as Dc) as Void {
-      dc.setColor(Complicated.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(Cyberpunk.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _timeCenter - 5,
         _y,
@@ -66,9 +66,9 @@ module Complicated {
         Graphics.TEXT_JUSTIFY_RIGHT
       );
       // to make the colon blink, we only show it on even seconds
-      var colonColor = Complicated.DARK_BLUE;
+      var colonColor = Cyberpunk.DARK_BLUE;
       if (_model._secondOfMinute % 2 == 0) {
-        colonColor = Complicated.DARK_WHITE;
+        colonColor = Cyberpunk.DARK_WHITE;
       }
       dc.setColor(colonColor, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
@@ -78,7 +78,7 @@ module Complicated {
         ":",
         Graphics.TEXT_JUSTIFY_RIGHT
       );
-      dc.setColor(Complicated.WHITE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(Cyberpunk.WHITE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _timeCenter + 3,
         _y,
@@ -86,7 +86,7 @@ module Complicated {
         _model._displayMinute,
         Graphics.TEXT_JUSTIFY_LEFT
       );
-      dc.setColor(Complicated.DARK_WHITE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(Cyberpunk.DARK_WHITE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _timeCenter + 38,
         _y + 16,

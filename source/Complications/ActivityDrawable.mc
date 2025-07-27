@@ -2,12 +2,14 @@ import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
 
-module Complicated {
+module Cyberpunk {
   class ActivityDrawable extends WatchUi.Drawable {
-    private var _model as Complicated.ActivityModel;
+    private var _model as Cyberpunk.ActivityModel;
 
     private var _x as Number;
     private var _y as Number;
+    private var _offsetX = -52;
+    private var _missionOffsetX = 28;
 
     public function initialize(
       params as
@@ -18,9 +20,9 @@ module Complicated {
           :radius as Numeric,
         }
     ) {
-      _model = new Complicated.ActivityModel();
+      _model = new Cyberpunk.ActivityModel();
       _y = params[:y];
-      _x = params[:x];
+      _x = params[:x] + _offsetX;
 
       var options = {
         :x => params[:x],
@@ -31,24 +33,46 @@ module Complicated {
       Drawable.initialize(options);
     }
 
-    private function drawTrainingStatus(dc as Graphics.Dc) as Void {
-      var activityName = "-";
-      if (_model._activityName != null) {
-        activityName = _model._activityName;
-      }
-      dc.setColor(YELLOW, Graphics.COLOR_TRANSPARENT);
+    private function drawStoryline(dc as Graphics.Dc) as Void {
+      dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _x,
         _y,
         Graphics.FONT_SYSTEM_XTINY,
-        activityName,
+        _model._displayStoryline,
         Graphics.TEXT_JUSTIFY_LEFT
       );
     }
 
+    private function drawMission(dc as Graphics.Dc) as Void {
+      var color = YELLOW;
+      if (_model._isComplete) {
+        color = GREEN;
+      }
+      dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+
+      dc.drawText(
+        _x + _missionOffsetX,
+        _y + 14,
+        Graphics.FONT_SYSTEM_XTINY,
+        _model._displayMission,
+        Graphics.TEXT_JUSTIFY_LEFT
+      );
+      if (_model._displayMissionDetail != null) {
+        dc.drawText(
+          _x + _missionOffsetX,
+          _y + 28,
+          Graphics.FONT_SYSTEM_XTINY,
+          _model._displayMissionDetail,
+          Graphics.TEXT_JUSTIFY_LEFT
+        );
+      }
+    }
+
     public function draw(dc as Dc) as Void {
       _model.updateModel();
-      drawTrainingStatus(dc);
+      drawStoryline(dc);
+      drawMission(dc);
     }
   }
 }

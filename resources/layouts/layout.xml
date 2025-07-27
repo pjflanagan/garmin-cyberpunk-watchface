@@ -1,24 +1,24 @@
 <layout id="WatchFace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <drawable class="Background" />
-    <drawable id="HourRing" class="Complicated.HourRingDrawable">
+    <drawable id="HourRing" class="Cyberpunk.HourRingDrawable">
         <param name="x">dc.getWidth() / 2</param>
         <param name="y">dc.getHeight() / 2</param>
         <param name="radius">dc.getWidth() / 2</param>
     </drawable>
-    <drawable id="Weather" class="Complicated.WeatherDrawable">
+    <drawable id="Weather" class="Cyberpunk.WeatherDrawable">
         <param name="x">dc.getWidth() / 2</param>
         <param name="y">36</param>
     </drawable>
-    <drawable id="DateTime" class="Complicated.DateTimeDrawable">
+    <drawable id="DateTime" class="Cyberpunk.DateTimeDrawable">
         <param name="x">dc.getWidth() / 2</param>
         <param name="y">dc.getHeight() / 2 - 48</param>
     </drawable>
-    <drawable id="HealthBar" class="Complicated.HealthBarDrawable">
+    <drawable id="HealthBar" class="Cyberpunk.HealthBarDrawable">
         <param name="x">dc.getWidth() / 2</param>
         <param name="y">dc.getHeight() / 2 + 12</param>
     </drawable>
-    <drawable id="Activity" class="Complicated.ActivityDrawable">
+    <drawable id="Activity" class="Cyberpunk.ActivityDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">dc.getHeight() - 48</param>
+        <param name="y">dc.getHeight() - 72</param>
     </drawable>
 </layout>

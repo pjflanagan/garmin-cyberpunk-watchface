@@ -7,7 +7,7 @@ import Toybox.Time;
 import Toybox.Time.Gregorian;
 import Toybox.Position;
 
-module Complicated {
+module Cyberpunk {
   class DateTimeModel {
     public var _displayHour as String; //[1, 12]
     public var _displayMinute as String; //[00, 59]

@@ -1,7 +1,7 @@
 import Toybox.Lang;
 import Toybox.Graphics;
 
-module Complicated {
+module Cyberpunk {
 
   var BACKGROUND_RED = 0x180101;
   var RED = 0xFF003C;

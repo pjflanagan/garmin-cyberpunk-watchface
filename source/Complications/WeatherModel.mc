@@ -7,7 +7,7 @@ import Toybox.Time;
 import Toybox.Weather;
 import Toybox.Position;
 
-module Complicated {
+module Cyberpunk {
   class WeatherModel {
     public var _high as Number?;
     public var _low as Number?;
