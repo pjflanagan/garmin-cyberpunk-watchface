@@ -47,14 +47,14 @@ module Cyberpunk {
       var lastActivity = userActivity.next();
 
       var startTime = lastActivity.startTime;
+      _displayMission = getSportName(lastActivity.type).toUpper();
       if (startTime.greaterThan(Time.today())) {
         _isComplete = true;
-        _displayMission = lastActivity.type + " " + lastActivity.distance;
+        _displayMission = _displayMission + " " + lastActivity.distance;
         _displayMissionDetail = lastActivity.duration;
       } else {
         // TODO: what do we display if this is false
         _isComplete = false;
-        _displayMission = lastActivity.type.toString();
       }
     }
   }

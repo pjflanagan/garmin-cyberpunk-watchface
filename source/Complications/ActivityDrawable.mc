@@ -8,7 +8,7 @@ module Cyberpunk {
 
     private var _x as Number;
     private var _y as Number;
-    private var _offsetX = -52;
+    private var _offsetX = -64;
     private var _missionOffsetX = 28;
 
     public function initialize(

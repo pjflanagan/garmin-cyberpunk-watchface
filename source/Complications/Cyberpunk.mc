@@ -4,8 +4,8 @@ import Toybox.Graphics;
 module Cyberpunk {
   var BACKGROUND_RED = 0x180101;
   var RED = 0xff003c;
-  // var MED_RED = 0xAA0000; // Not used
-  var DARK_RED = 0x570114; // aa0000
+  var MED_RED = 0xaa0000;
+  var DARK_RED = 0x570114;
   var BLUE = 0x00f0ff;
   var DARK_BLUE = 0x084a4f;
   var YELLOW = 0xfcee09;
@@ -40,12 +40,67 @@ module Cyberpunk {
     var currentX = x;
 
     dc.setPenWidth(1);
-    dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(MED_RED, Graphics.COLOR_TRANSPARENT);
 
     for (var i = 0; i < segments.size(); i++) {
       var segmentLength = segments[i];
       dc.drawLine(currentX, y, currentX + segmentLength, y);
       currentX = currentX + segmentLength + 2; // 2 pixel gap
     }
+  }
+
+  const SportNameMap = [
+    "Workout",
+    "Run",
+    "Cycle",
+    "Transition",
+    "Gym",
+    "Swim",
+    "Basketball",
+    "Soccer",
+    "Tennis",
+    "Football",
+    "Training",
+    "Walk",
+    "XC Ski",
+    "Ski",
+    "Snowboard",
+    "Row",
+    "Mountaineering",
+    "Hike",
+    "Multisport",
+    "Paddle",
+    "Flying",
+    "eBike",
+    "Ride", // Motorcycling
+    "Boating",
+    "Drive",
+    "Golf",
+    "Hang Glide",
+    "Horseback Ride",
+    "Hunt",
+    "Fish",
+    "Skate",
+    "Climb",
+    "Sail",
+    "Ice Skate",
+    "Sky Dive",
+    "Snowshoe",
+    "Snowmobile",
+    "Paddleboard",
+    "Surf",
+    "Wakeboard",
+    "Water Ski",
+    "Kayak",
+    "Raft",
+    "Windsurf",
+    "Kitesurf",
+  ];
+
+  function getSportName(sport as Number) as String {
+      if (sport < 0 || sport >= SportNameMap.size()) {
+        return "Workout";
+      }
+      return SportNameMap[sport];
   }
 }
