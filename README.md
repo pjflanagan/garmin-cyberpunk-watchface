@@ -20,6 +20,7 @@ This watch features:
 - [ ] Redraw the weather widget to include chance of rain
 - [ ] Start with the health bar
 
+- https://lospec.com/palette-list/6-bit-rgb
 - https://github.com/desyat/OpenWeatherMapWidget/tree/master/Open%20Weather%20Widget/resources/drawables
 - https://github.com/sunpazed/garmin-iconfonts
 - https://developer.garmin.com/connect-iq/connect-iq-basics/your-first-app/

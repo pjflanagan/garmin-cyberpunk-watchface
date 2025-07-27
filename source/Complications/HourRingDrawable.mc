@@ -38,12 +38,36 @@ module Complicated {
       Drawable.initialize(options);
     }
 
-    private function getHourAngle(hour as Number) as Number {
-      var degrees = (hour * -90) / 6 + 270;
+    private function getSecondsAngle(seconds as Number) as Number {
+      var degrees = (seconds * -90) / (6 * 3600) + 270;
       if (degrees < 0) {
         return degrees + 360;
       }
       return degrees;
+    }
+
+    private function getHourAngle(hour as Number) as Number {
+      return getSecondsAngle(hour * 3600) as Number;
+    }
+
+    // NOTE: this is a bad way of doing this, change this to just use the seconds math
+    private function getMinuteAngle(
+      hourStartAngle as Number,
+      hourEndAngle as Number,
+      minute as Number
+    ) as Number {
+      var percentOfHour = minute / 60.0;
+      if (percentOfHour == 0) {
+        return hourStartAngle;
+      }
+
+      if (hourStartAngle < 0) {
+        hourStartAngle = hourStartAngle + 360;
+      }
+
+      var segmentDegrees = Complicated.abs(hourStartAngle - hourEndAngle);
+      var minuteDegrees = segmentDegrees * percentOfHour;
+      return (hourStartAngle - minuteDegrees) as Number;
     }
 
     private function drawRingSegment(dc as Dc, hour as Number) as Void {
@@ -68,8 +92,8 @@ module Complicated {
           endAngle
         );
         return;
-      } 
-      
+      }
+
       // draw the current hour in blue
       if (hour == _model._hourOfDay) {
         dc.setColor(Complicated.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
@@ -83,19 +107,16 @@ module Complicated {
           endAngle
         );
 
-        var percentOfHour = _model._minuteOfHour / 60.0;
-        if (percentOfHour == 0) {
-          // do not attempt to draw the minutes if there are none
+        var minuteEndAngle = getMinuteAngle(
+          startAngle,
+          endAngle,
+          _model._minuteOfHour
+        );
+        if (minuteEndAngle == startAngle) {
+          // no minutes to draw, just return
           return;
         }
 
-        if (startAngle < 0) {
-          startAngle = startAngle + 360;
-        }
-
-        var segmentDegrees = Complicated.abs(startAngle - endAngle);
-        var minuteDegrees = segmentDegrees * percentOfHour;
-        var minuteEndAngle = startAngle - minuteDegrees;
         dc.setColor(Complicated.BLUE, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(_segmentWidth * 2); // half ends up off the display, so multiply by 2
         dc.drawArc(
@@ -120,13 +141,34 @@ module Complicated {
     }
 
     private function drawSunriseMarker(dc as Dc) as Void {
-      if (_model._sunriseHour != null && _model._sunriseMinute != null) {
-        var angle = getHourAngle(_model._sunriseHour);
-        var x = _x + Math.cos((angle * Math.PI) / 180) * _radius;
-        var y = _y + Math.sin((angle * Math.PI) / 180) * _radius;
-
+      if (_model._sunriseSeconds != null) {
+        var sunriseAngle = getSecondsAngle(_model._sunriseSeconds);
         dc.setColor(Complicated.YELLOW, Graphics.COLOR_TRANSPARENT);
-        dc.fillCircle(x, y, 6);
+        dc.setPenWidth(_segmentWidth * 2);
+        dc.drawArc(
+          _x,
+          _y,
+          _radius,
+          Graphics.ARC_CLOCKWISE,
+          sunriseAngle + 1,
+          sunriseAngle - 1
+        );
+      }
+    }
+
+    private function drawSunsetMarker(dc as Dc) as Void {
+      if (_model._sunsetSeconds != null) {
+        var sunsetAngle = getSecondsAngle(_model._sunsetSeconds);
+        dc.setColor(Complicated.YELLOW, Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(_segmentWidth * 2);
+        dc.drawArc(
+          _x,
+          _y,
+          _radius,
+          Graphics.ARC_CLOCKWISE,
+          sunsetAngle + 1,
+          sunsetAngle - 1
+        );
       }
     }
 
@@ -134,6 +176,7 @@ module Complicated {
       _model.updateModel();
       drawRing(dc);
       drawSunriseMarker(dc);
+      drawSunsetMarker(dc);
     }
   }
 }

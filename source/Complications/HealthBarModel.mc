@@ -15,19 +15,22 @@ module Complicated {
     public var _heartRate as Number?;
     public var _heartRateZone as Number;
 
+    public var _stepCount as Number;
     public var _stepsPercent as Number;
 
     public function initialize() {
       _lookupTime = new Time.Duration(24 * 60 * 60);
       
+      _stepCount = 0;
       _heartRateZone = 0;
       _stepsPercent = 0;
     }
 
     public function updateSteps() as Void {
       var info = ActivityMonitor.getInfo();
+      _stepCount = info.steps;
       var goalPercent =
-        ((info.steps.toFloat() / info.stepGoal.toFloat()) * 100) as Number;
+        ((_stepCount.toFloat() / info.stepGoal.toFloat()) * 100) as Number;
       _stepsPercent = min(goalPercent, 100);
     }
 

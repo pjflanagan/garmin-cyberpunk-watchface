@@ -5,8 +5,8 @@ module Complicated {
 
   var BACKGROUND_RED = 0x180101;
   var RED = 0xFF003C;
-  // var MED_RED = 0xA00000; // Not used
-  var DARK_RED = 0x570114;
+  // var MED_RED = 0xAA0000; // Not used
+  var DARK_RED = 0x570114; // aa0000
   var BLUE = 0x00F0FF;
   var DARK_BLUE = 0x084A4F;
   var YELLOW = 0xFCEE09;

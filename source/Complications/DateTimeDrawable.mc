@@ -68,7 +68,7 @@ module Complicated {
       // to make the colon blink, we only show it on even seconds
       var colonColor = Complicated.DARK_BLUE;
       if (_model._secondOfMinute % 2 == 0) {
-        colonColor = Complicated.BLUE;
+        colonColor = Complicated.DARK_WHITE;
       }
       dc.setColor(colonColor, Graphics.COLOR_TRANSPARENT);
       dc.drawText(

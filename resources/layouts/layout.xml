@@ -5,12 +5,20 @@
         <param name="y">dc.getHeight() / 2</param>
         <param name="radius">dc.getWidth() / 2</param>
     </drawable>
+    <drawable id="Weather" class="Complicated.WeatherDrawable">
+        <param name="x">dc.getWidth() / 2</param>
+        <param name="y">36</param>
+    </drawable>
     <drawable id="DateTime" class="Complicated.DateTimeDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">dc.getHeight() / 2 - 24</param>
+        <param name="y">dc.getHeight() / 2 - 48</param>
     </drawable>
-    <drawable id="BodyBattery" class="Complicated.HealthBarDrawable">
+    <drawable id="HealthBar" class="Complicated.HealthBarDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">dc.getHeight() / 2 + 24</param>
+        <param name="y">dc.getHeight() / 2 + 12</param>
+    </drawable>
+    <drawable id="Activity" class="Complicated.ActivityDrawable">
+        <param name="x">dc.getWidth() / 2</param>
+        <param name="y">dc.getHeight() - 48</param>
     </drawable>
 </layout>

@@ -21,13 +21,18 @@ module Complicated {
       _stepHeight + _bodyBatteryHeight + _slotHeight;
     private var _heartRateStrokeWidth = 1;
 
-    private var _iconWidth = 8;
-    private var _textWidth = 16;
+    private var _stepsLabelWidth = 16;
+    private var _bodyBatteryLabelsWidth = 16;
 
     private var _gap = 2;
 
     private var _fullWidth =
-      _iconWidth + _heartRateWidth + _barWidth + 2 * _textWidth + 4 * _gap;
+      _stepsLabelWidth +
+      _heartRateWidth +
+      _barWidth +
+      2 * _bodyBatteryLabelsWidth +
+      4 * _gap;
+    private var _opticalCentering = 8;
 
     public function initialize(
       params as
@@ -41,7 +46,7 @@ module Complicated {
 
       var centerX = params[:x];
       _y = params[:y];
-      _x = centerX - _fullWidth / 2;
+      _x = centerX - _fullWidth / 2 + _opticalCentering;
 
       var options = {
         :x => params[:x],
@@ -54,7 +59,7 @@ module Complicated {
 
     private function drawLabel(dc as Dc) as Void {
       // TODO: make all of these X and Y values properties and set them in the initialize function
-      var X = _x + _iconWidth + _gap;
+      var X = _x + _stepsLabelWidth + _gap;
       dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         X,
@@ -65,8 +70,31 @@ module Complicated {
       );
     }
 
+    private function drawStepsLabel(dc as Dc) as Void {
+      var X = _x + _stepsLabelWidth - _gap;
+
+      var color = YELLOW;
+      if (_model._stepsPercent >= 100) {
+        color = GREEN;
+      }
+
+      var displayText = _model._stepCount.format("%d");
+      if (_model._stepCount > 1000) {
+        displayText = (_model._stepCount / 1000.0).format("%.1f") + "K";
+      }
+
+      dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(
+        X,
+        _y + _heartRateWidth / 2 - 10,
+        Graphics.FONT_SYSTEM_XTINY,
+        displayText,
+        Graphics.TEXT_JUSTIFY_RIGHT
+      );
+    }
+
     private function drawSteps(dc as Dc) as Void {
-      var X = _x + _iconWidth + _heartRateWidth + 2 * _gap;
+      var X = _x + _stepsLabelWidth + _heartRateWidth + 2 * _gap;
 
       var percent = _model._stepsPercent;
       var percentWidth = (_barWidth * percent) / 100;
@@ -82,7 +110,7 @@ module Complicated {
     }
 
     private function drawBodyBattery(dc as Dc) as Void {
-      var X = _x + _iconWidth + _heartRateWidth + 2 * _gap;
+      var X = _x + _stepsLabelWidth + _heartRateWidth + 2 * _gap;
       var Y = _y + _stepHeight + _gap;
 
       var percent = _model._currentBodyBatteryValue;
@@ -95,7 +123,7 @@ module Complicated {
     }
 
     private function drawBodyBatteryLabel(dc as Dc) as Void {
-      var X = _x + _iconWidth + _heartRateWidth + _barWidth + 3 * _gap;
+      var X = _x + _stepsLabelWidth + _heartRateWidth + _barWidth + 3 * _gap;
 
       var bodyBattery = "-";
       if (_model._currentBodyBatteryValue != null) {
@@ -116,7 +144,7 @@ module Complicated {
       }
       dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
-        X + _gap + _textWidth,
+        X + _gap + _bodyBatteryLabelsWidth,
         _y,
         Graphics.FONT_SYSTEM_XTINY,
         maxBodyBattery,
@@ -125,7 +153,7 @@ module Complicated {
     }
 
     private function drawHeartRateSlots(dc as Dc) as Void {
-      var X = _x + _iconWidth + _heartRateWidth + 2 * _gap;
+      var X = _x + _stepsLabelWidth + _heartRateWidth + 2 * _gap;
       var Y = _y + _stepHeight + _gap + _bodyBatteryHeight + _gap;
 
       // var percent = _model._heartRate;
@@ -150,7 +178,7 @@ module Complicated {
     }
 
     private function drawHeartRate(dc as Dc) as Void {
-      var X = _x + _iconWidth + _gap;
+      var X = _x + _stepsLabelWidth + _gap;
 
       dc.setColor(DARK_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.fillRectangle(X, _y, _heartRateWidth, _heartRateWidth);
@@ -174,6 +202,7 @@ module Complicated {
     public function draw(dc as Dc) as Void {
       _model.updateModel();
       // drawLabel(dc);
+      drawStepsLabel(dc);
       drawHeartRate(dc);
       drawSteps(dc);
       drawBodyBattery(dc);

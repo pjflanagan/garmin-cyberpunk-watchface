@@ -4,45 +4,51 @@ import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.System;
 import Toybox.Time;
-import Toybox.Weather;
-import Toybox.Position;
+import Toybox.Complications;
 
 module Complicated {
   class HourRingModel {
     public var _hourOfDay as Number; //[0, 23]
     public var _minuteOfHour as Number; //[0, 59]
 
-    public var _sunriseHour as Number?;
-    public var _sunriseMinute as Number?;
+    private var _sunriseComplicationId as Complications.Id;
+    public var _sunriseSeconds as Number?;
 
-    public var _sunsetHour as Number?;
-    public var _sunsetMinute as Number?;
-
-    private function updateSunTimes() as Void {
-      var position = Position.getInfo().position;
-      var now = Time.now();
-
-      var sunriseMoment = Weather.getSunrise(position, now);
-      if (sunriseMoment != null) {
-        var sunriseTime = Gregorian.info(sunriseMoment, Time.FORMAT_SHORT);
-        _sunriseHour = sunriseTime.hour;
-        _sunriseMinute = sunriseTime.min;
-      }
-
-      var sunsetMoment = Weather.getSunset(position, now);
-      if (sunsetMoment != null) {
-        var sunsetTime = Gregorian.info(sunsetMoment, Time.FORMAT_SHORT);
-        _sunsetHour = sunsetTime.hour;
-        _sunsetMinute = sunsetTime.min;
-      }
-    }
+    private var _sunsetComplicationId as Complications.Id;
+    public var _sunsetSeconds as Number?;
 
     public function initialize() {
       var clockTime = System.getClockTime();
       _hourOfDay = clockTime.hour;
       _minuteOfHour = clockTime.min;
 
-      updateSunTimes();
+      // init sunrise complication
+      _sunriseComplicationId = new Complications.Id(
+        Complications.COMPLICATION_TYPE_SUNRISE
+      );
+      Complications.getComplication(_sunriseComplicationId);
+      Complications.registerComplicationChangeCallback(
+        self.method(:onComplicationChanged)
+      );
+      Complications.subscribeToUpdates(_sunriseComplicationId);
+
+      // init sunset complication
+      _sunsetComplicationId = new Complications.Id(
+        Complications.COMPLICATION_TYPE_SUNSET
+      );
+      Complications.getComplication(_sunsetComplicationId);
+      Complications.registerComplicationChangeCallback(
+        self.method(:onComplicationChanged)
+      );
+      Complications.subscribeToUpdates(_sunsetComplicationId);
+    }
+
+    public function onComplicationChanged(id as Complications.Id) as Void {
+      if (id.equals(_sunriseComplicationId)) {
+        _sunriseSeconds = Complications.getComplication(id).value;
+      } else if (id.equals(_sunsetComplicationId)) {
+        _sunsetSeconds = Complications.getComplication(id).value;
+      }
     }
 
     public function updateModel() as Void {
@@ -50,7 +56,6 @@ module Complicated {
       _hourOfDay = clockTime.hour;
       _minuteOfHour = clockTime.min;
 
-      updateSunTimes();
     }
   }
 }
