@@ -98,6 +98,7 @@ module Cyberpunk {
 
     public function draw(dc as Dc) as Void {
       _model.updateModel();
+      Cyberpunk.drawLabel(dc, _timeCenter - 34, _y + 4, [8, 6, 8]);
       drawDate(dc);
       drawTime(dc);
     }

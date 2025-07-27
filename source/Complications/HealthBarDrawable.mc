@@ -57,19 +57,6 @@ module Cyberpunk {
       Drawable.initialize(options);
     }
 
-    private function drawLabel(dc as Dc) as Void {
-      // TODO: make all of these X and Y values properties and set them in the initialize function
-      var X = _x + _stepsLabelWidth + _gap;
-      dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
-      dc.drawText(
-        X,
-        _y - 10,
-        Graphics.FONT_SYSTEM_XTINY,
-        "HEALTH INDICATION",
-        Graphics.TEXT_JUSTIFY_LEFT
-      );
-    }
-
     private function drawStepsLabel(dc as Dc) as Void {
       var X = _x + _stepsLabelWidth - _gap;
 
@@ -201,7 +188,7 @@ module Cyberpunk {
 
     public function draw(dc as Dc) as Void {
       _model.updateModel();
-      // drawLabel(dc);
+      Cyberpunk.drawLabel(dc, _x + _stepsLabelWidth + _gap, _y - 2 * _gap, [12, 18]);
       drawStepsLabel(dc);
       drawHeartRate(dc);
       drawSteps(dc);

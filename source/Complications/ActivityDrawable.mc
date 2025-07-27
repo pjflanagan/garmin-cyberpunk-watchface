@@ -44,6 +44,21 @@ module Cyberpunk {
       );
     }
 
+    private function drawMissionIcon(dc as Graphics.Dc) as Void {
+      var outlineColor = YELLOW;
+      var color = DARK_YELLOW;
+      if (_model._isComplete) {
+        outlineColor = GREEN;
+        color = DARK_GREEN;
+      }
+      dc.setPenWidth(1);
+
+      dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+      dc.fillRectangle(_x, _y + 18, _missionOffsetX - 2, 16);
+      dc.setColor(outlineColor, Graphics.COLOR_TRANSPARENT);
+      dc.drawRectangle(_x, _y + 18, _missionOffsetX - 2, 16);
+    }
+
     private function drawMission(dc as Graphics.Dc) as Void {
       var color = YELLOW;
       if (_model._isComplete) {
@@ -71,7 +86,9 @@ module Cyberpunk {
 
     public function draw(dc as Dc) as Void {
       _model.updateModel();
+      Cyberpunk.drawLabel(dc, _x, _y, [16, 10]);
       drawStoryline(dc);
+      drawMissionIcon(dc);
       drawMission(dc);
     }
   }

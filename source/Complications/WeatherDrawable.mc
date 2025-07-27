@@ -80,6 +80,7 @@ module Cyberpunk {
 
     public function draw(dc as Dc) as Void {
       _model.updateModel();
+      Cyberpunk.drawLabel(dc, _x, _y, [12, 18]);
       drawTemperature(dc);
       drawHighLow(dc);
     }
