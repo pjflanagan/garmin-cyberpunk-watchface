@@ -17,6 +17,12 @@ module Cyberpunk {
 
     public var _month as String; // JAN
     public var _dayOfMonth as String; //[01, 31]
+    public var _dayOfWeek as Number; // 0-6, 0 is Sunday
+
+    private const MonthMap = [
+      "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+      "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+    ];
 
     public function initialize() {
       var clockTime = System.getClockTime();
@@ -33,9 +39,10 @@ module Cyberpunk {
       _displaySecond = _secondOfMinute.format("%02d");
 
       var now = Time.now();
-      var info = Gregorian.info(now, Time.FORMAT_MEDIUM);
-      _month = info.month.toUpper();
+      var info = Gregorian.info(now, Time.FORMAT_SHORT);
+      _month = MonthMap[(info.month as Number) - 1];
       _dayOfMonth = info.day.format("%02d");
+      _dayOfWeek = info.day_of_week - 1;
     }
 
     public function updateModel() as Void {

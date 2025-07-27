@@ -38,7 +38,7 @@ module Cyberpunk {
     }
 
     public function drawDate(dc as Dc) as Void {
-      dc.setColor(Cyberpunk.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(Cyberpunk.BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _dateCenter,
         _y + 7,
@@ -54,10 +54,23 @@ module Cyberpunk {
         _model._dayOfMonth,
         Graphics.TEXT_JUSTIFY_LEFT
       );
+      for (var day = 0; day < 7; day++) {
+        var barColor = Cyberpunk.DARK_RED;
+        if (day == _model._dayOfWeek) {
+          barColor = Cyberpunk.BLUE;
+        }
+        dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
+        dc.fillRectangle(
+          _dateCenter - 40 + (day * 10) + 3,
+          _y + 8,
+          8,
+          2
+        );
+      }
     }
 
     public function drawTime(dc as Dc) as Void {
-      dc.setColor(Cyberpunk.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(Cyberpunk.BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _timeCenter - 5,
         _y,
