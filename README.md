@@ -16,10 +16,11 @@ This watch features:
 - [ ] Garmin dev ID
   - [ ] Move it into a better named folder in my `dev (/peter)` folder
   - [ ] Also store it on Google Docs incase I get a new laptop
-- [ ] Install Rajdhani font and make the clockface first
-- [ ] Redraw the weather widget to include chance of rain
 - [ ] Start with the health bar
+- [ ] Add a bunch of weather icons
+- [ ] Install Rajdhani font and make the clockface first
 
+- https://github.com/Remix-Design/RemixIcon
 - https://lospec.com/palette-list/6-bit-rgb
 - https://github.com/desyat/OpenWeatherMapWidget/tree/master/Open%20Weather%20Widget/resources/drawables
 - https://github.com/sunpazed/garmin-iconfonts

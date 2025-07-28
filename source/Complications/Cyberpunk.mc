@@ -150,8 +150,7 @@ module Cyberpunk {
     return metersPerSecond * 2.23694; // 1 m/s = 2.23694 mph
   }
 
-  // TODO: I need 10 icons
-  const WeatherIcon_Clear = "clear";
+  const WeatherIcon_Clear = "clear"; // NOTE: _moon and _sun need to be appended to this
   const WeatherIcon_Cloudy = "cloudy";
   const WeatherIcon_Rain = "rain";
   const WeatherIcon_Snow = "snow";
