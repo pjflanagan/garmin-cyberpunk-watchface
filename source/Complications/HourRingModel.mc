@@ -10,6 +10,7 @@ module Cyberpunk {
   class HourRingModel {
     public var _hourOfDay as Number; //[0, 23]
     public var _minuteOfHour as Number; //[0, 59]
+    public var _secondOfMinute as Number; //[0, 59]
 
     private var _sunriseComplicationId as Complications.Id;
     public var _sunriseSeconds as Number?;
@@ -21,6 +22,7 @@ module Cyberpunk {
       var clockTime = System.getClockTime();
       _hourOfDay = clockTime.hour;
       _minuteOfHour = clockTime.min;
+      _secondOfMinute = clockTime.sec;
 
       // init sunrise complication
       _sunriseComplicationId = new Complications.Id(
@@ -55,7 +57,7 @@ module Cyberpunk {
       var clockTime = System.getClockTime();
       _hourOfDay = clockTime.hour;
       _minuteOfHour = clockTime.min;
-
+      _secondOfMinute = clockTime.sec;
     }
   }
 }

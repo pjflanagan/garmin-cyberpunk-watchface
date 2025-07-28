@@ -62,9 +62,9 @@ module Cyberpunk {
         dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
         dc.fillRectangle(
           _dateCenter - 40 + (day * 10) + 3,
-          _y + 8,
+          _y + 7,
           8,
-          2
+          3
         );
       }
     }

@@ -38,7 +38,15 @@ module Cyberpunk {
       Drawable.initialize(options);
     }
 
-    private function getSecondsAngle(seconds as Number) as Number {
+    private function getSecondOfMinuteAngle(seconds as Number) as Number {
+      var degrees = (seconds * -90) / 15 + 270;
+      if (degrees < 0) {
+        return degrees + 360;
+      }
+      return degrees;
+    }
+
+    private function getSecondOfDayAngle(seconds as Number) as Number {
       var degrees = (seconds * -90) / (6 * 3600) + 270;
       if (degrees < 0) {
         return degrees + 360;
@@ -46,103 +54,36 @@ module Cyberpunk {
       return degrees;
     }
 
-    private function getHourAngle(hour as Number) as Number {
-      return getSecondsAngle(hour * 3600) as Number;
-    }
-
-    // NOTE: this is a bad way of doing this, change this to just use the seconds math
-    private function getMinuteAngle(
-      hourStartAngle as Number,
-      hourEndAngle as Number,
-      minute as Number
+    private function getHourMinuteAngle(
+      hour as Number,
+      minutes as Number
     ) as Number {
-      var percentOfHour = minute / 60.0;
-      if (percentOfHour == 0) {
-        return hourStartAngle;
-      }
-
-      if (hourStartAngle < 0) {
-        hourStartAngle = hourStartAngle + 360;
-      }
-
-      var segmentDegrees = Cyberpunk.abs(hourStartAngle - hourEndAngle);
-      var minuteDegrees = segmentDegrees * percentOfHour;
-      return (hourStartAngle - minuteDegrees) as Number;
+      return getSecondOfDayAngle(hour * 3600 + minutes * 60) as Number;
     }
 
-    private function drawRingSegment(dc as Dc, hour as Number) as Void {
-      var startAngle = getHourAngle(hour) - _gapDegrees / 2;
-      var endAngle = getHourAngle(hour + 1) + _gapDegrees / 2;
-
-      // draw a thick line for every hour of the day
-      dc.setPenWidth(_segmentFullWidth * 2); // use the current hour segment width, again multiply by 2
-      dc.setColor(Cyberpunk.DARK_RED, Graphics.COLOR_TRANSPARENT);
-      dc.drawArc(_x, _y, _radius, Graphics.ARC_CLOCKWISE, startAngle, endAngle);
-
-      // draw a past hour with a thin red line
-      if (hour < _model._hourOfDay) {
-        dc.setColor(Cyberpunk.RED, Graphics.COLOR_TRANSPARENT);
-        dc.setPenWidth(_segmentWidth * 2); // half ends up off the display, so multiply by 2
-        dc.drawArc(
-          _x,
-          _y,
-          _radius,
-          Graphics.ARC_CLOCKWISE,
-          startAngle,
-          endAngle
-        );
-        return;
-      }
-
-      // draw the current hour in blue
-      if (hour == _model._hourOfDay) {
-        dc.setColor(Cyberpunk.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
-        dc.setPenWidth(_segmentFullWidth * 2); // use the current hour segment width, again multiply by 2
-        dc.drawArc(
-          _x,
-          _y,
-          _radius,
-          Graphics.ARC_CLOCKWISE,
-          startAngle,
-          endAngle
-        );
-
-        var minuteEndAngle = getMinuteAngle(
-          startAngle,
-          endAngle,
-          _model._minuteOfHour
-        );
-        if (minuteEndAngle == startAngle) {
-          // no minutes to draw, just return
-          return;
-        }
-
-        dc.setColor(Cyberpunk.BLUE, Graphics.COLOR_TRANSPARENT);
-        dc.setPenWidth(_segmentWidth * 2); // half ends up off the display, so multiply by 2
-        dc.drawArc(
-          _x,
-          _y,
-          _radius,
-          Graphics.ARC_CLOCKWISE,
-          startAngle,
-          minuteEndAngle
-        );
-      }
+    private function getHourAngle(hour as Number) as Number {
+      return getSecondOfDayAngle(hour * 3600) as Number;
     }
 
-    // NOTE: if we ever remove the current hour segment being a different color or width,
-    // then we can simplify this by just drawing one dark ring as a base
-    // one light red ring on top of it that represents the % of the day
-    // then draw a bunch of little black dividers
-    private function drawRing(dc as Dc) as Void {
-      for (var hour = 0; hour <= 23; hour++) {
-        drawRingSegment(dc, hour);
+    public function drawHourDividers(dc as Dc) as Void {
+      dc.setColor(Cyberpunk.BACKGROUND, Graphics.COLOR_TRANSPARENT);
+      dc.setPenWidth(16);
+      for (var hour = 0; hour < 24; hour++) {
+        var angle = getHourAngle(hour);
+        dc.drawArc(
+          _x,
+          _y,
+          _radius,
+          Graphics.ARC_CLOCKWISE,
+          angle + 1,
+          angle - 1
+        );
       }
     }
 
     private function drawSunriseMarker(dc as Dc) as Void {
       if (_model._sunriseSeconds != null) {
-        var sunriseAngle = getSecondsAngle(_model._sunriseSeconds);
+        var sunriseAngle = getSecondOfDayAngle(_model._sunriseSeconds);
         dc.setColor(Cyberpunk.YELLOW, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(_segmentWidth * 2);
         dc.drawArc(
@@ -158,7 +99,7 @@ module Cyberpunk {
 
     private function drawSunsetMarker(dc as Dc) as Void {
       if (_model._sunsetSeconds != null) {
-        var sunsetAngle = getSecondsAngle(_model._sunsetSeconds);
+        var sunsetAngle = getSecondOfDayAngle(_model._sunsetSeconds);
         dc.setColor(Cyberpunk.YELLOW, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(_segmentWidth * 2);
         dc.drawArc(
@@ -166,15 +107,76 @@ module Cyberpunk {
           _y,
           _radius,
           Graphics.ARC_CLOCKWISE,
-          sunsetAngle + 1,
-          sunsetAngle - 1
+          sunsetAngle + 0.5,
+          sunsetAngle - 0.5
         );
       }
     }
 
     public function draw(dc as Dc) as Void {
       _model.updateModel();
-      drawRing(dc);
+
+      // draw order:
+      // 1. dark red ring
+      dc.setColor(Cyberpunk.DARK_RED, Graphics.COLOR_TRANSPARENT);
+      dc.setPenWidth(10);
+      dc.drawArc(_x, _y, _radius, Graphics.ARC_CLOCKWISE, 0, 360);
+
+      // 2. dark blue hour ring
+      var nextHourAngle = getHourAngle(_model._hourOfDay + 1);
+      var currentHourAngle = getHourAngle(_model._hourOfDay);
+      dc.setColor(Cyberpunk.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
+      dc.setPenWidth(16);
+      dc.drawArc(
+        _x,
+        _y,
+        _radius,
+        Graphics.ARC_CLOCKWISE,
+        currentHourAngle,
+        nextHourAngle
+      );
+
+      // 3. blue minute ring
+      var minuteAngle = getHourMinuteAngle(
+        _model._hourOfDay,
+        _model._minuteOfHour
+      );
+      // don't draw if minute angle is too small, it will draw backward
+      if (abs(minuteAngle - currentHourAngle) > 1) {
+        dc.setColor(Cyberpunk.BLUE, Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(14);
+        dc.drawArc(
+          _x,
+          _y,
+          _radius,
+          Graphics.ARC_CLOCKWISE,
+          currentHourAngle,
+          minuteAngle
+        );
+      }
+
+      // 4. red hour-1 ring
+      // dc.setColor(Cyberpunk.RED, Graphics.COLOR_TRANSPARENT);
+      // dc.setPenWidth(8);
+      // dc.drawArc(
+      //   _x,
+      //   _y,
+      //   _radius,
+      //   Graphics.ARC_CLOCKWISE,
+      //   270,
+      //   currentHourAngle
+      // );
+
+      // 5. second ring
+      var secondAngle = getSecondOfMinuteAngle(_model._secondOfMinute);
+      dc.setColor(Cyberpunk.RED, Graphics.COLOR_TRANSPARENT);
+      dc.setPenWidth(6);
+      dc.drawArc(_x, _y, _radius, Graphics.ARC_CLOCKWISE, 270, secondAngle);
+
+      // 6. last we draw the hour dividers
+      drawHourDividers(dc);
+
+      // 7. draw sunrise and sunset markers
       drawSunriseMarker(dc);
       drawSunsetMarker(dc);
     }

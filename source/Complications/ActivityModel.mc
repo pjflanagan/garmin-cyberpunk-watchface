@@ -53,7 +53,6 @@ module Cyberpunk {
         _displayMission = _displayMission + " " + lastActivity.distance;
         _displayMissionDetail = lastActivity.duration;
       } else {
-        // TODO: what do we display if this is false
         _isComplete = false;
       }
     }
