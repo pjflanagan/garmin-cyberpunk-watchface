@@ -46,12 +46,14 @@ module Cyberpunk {
       var userActivity = UserProfile.getUserActivityHistory();
       var lastActivity = userActivity.next();
 
-      var startTime = lastActivity.startTime;
+      var lastActivityStartTime = lastActivity.startTime;
       _displayMission = getSportName(lastActivity.type).toUpper();
-      if (startTime.greaterThan(Time.today())) {
+      if (lastActivityStartTime.greaterThan(Time.today())) {
         _isComplete = true;
-        _displayMission = _displayMission + " " + lastActivity.distance;
-        _displayMissionDetail = lastActivity.duration;
+        var miles = convertMetersToMiles(lastActivity.distance);
+        _displayMission = _displayMission + " " + miles.format("0.1f");
+        var milePace = calculateMilePace(lastActivity.distance, lastActivity.duration);
+        _displayMissionDetail = convertSecondsToTimeString(milePace as Number);
       } else {
         _isComplete = false;
       }

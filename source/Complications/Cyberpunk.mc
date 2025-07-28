@@ -1,5 +1,6 @@
 import Toybox.Lang;
 import Toybox.Graphics;
+import Toybox.Time;
 
 module Cyberpunk {
   var BACKGROUND = 0x180101;
@@ -98,9 +99,35 @@ module Cyberpunk {
   ];
 
   function getSportName(sport as Number) as String {
-      if (sport < 0 || sport >= SportNameMap.size()) {
-        return "Workout";
-      }
-      return SportNameMap[sport];
+    if (sport < 0 || sport >= SportNameMap.size()) {
+      return "Workout";
+    }
+    return SportNameMap[sport];
+  }
+
+  // TODO: move convert temperature to here
+
+  function convertMetersToMiles(meters as Number) as Float {
+    return meters / 1609.34; // 1 mile = 1609.34 meters
+  }
+
+  // returns seconds per mile
+  function calculateMilePace(
+    distance as Number, // in meters
+    duration as Time.Duration // in seconds
+  ) as Float {
+    return (duration.value() / convertMetersToMiles(distance));
+  }
+
+  function convertSecondsToTimeString(seconds as Number) as String {
+    var hours = seconds / 3600;
+    var minutes = (seconds % 3600) / 60;
+    var secs = seconds % 60;
+
+    var time = minutes.format("00") + ":" + secs.format("00");
+    if (hours > 0) {
+      time = hours + ":" + time;
+    }
+    return time;
   }
 }
