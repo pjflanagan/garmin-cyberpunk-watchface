@@ -56,6 +56,7 @@ module Cyberpunk {
         _displayMissionDetail = convertSecondsToTimeString(milePace as Number);
       } else {
         _isComplete = false;
+        _displayMissionDetail = null;
       }
     }
   }

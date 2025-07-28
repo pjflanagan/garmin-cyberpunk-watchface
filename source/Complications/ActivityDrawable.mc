@@ -54,9 +54,17 @@ module Cyberpunk {
       dc.setPenWidth(1);
 
       dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(_x, _y + 18, _missionOffsetX - 2, 16);
+      dc.fillRectangle(_x + 2, _y + 20, _missionOffsetX - 6, 12);
       dc.setColor(outlineColor, Graphics.COLOR_TRANSPARENT);
       dc.drawRectangle(_x, _y + 18, _missionOffsetX - 2, 16);
+      dc.setColor(BACKGROUND, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(
+        _x + _missionOffsetX / 2,
+        _y + 15,
+        Graphics.FONT_SYSTEM_XTINY,
+        "!",
+        Graphics.TEXT_JUSTIFY_CENTER
+      );
     }
 
     private function drawMission(dc as Graphics.Dc) as Void {
