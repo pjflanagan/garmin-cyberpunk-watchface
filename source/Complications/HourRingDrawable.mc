@@ -40,18 +40,12 @@ module Cyberpunk {
 
     private function getSecondOfMinuteAngle(seconds as Number) as Number {
       var degrees = (seconds * -90) / 15 + 270;
-      if (degrees < 0) {
-        return degrees + 360;
-      }
-      return degrees;
+      return normalizeDegrees(degrees);
     }
 
     private function getSecondOfDayAngle(seconds as Number) as Number {
       var degrees = (seconds * -90) / (6 * 3600) + 270;
-      if (degrees < 0) {
-        return degrees + 360;
-      }
-      return degrees;
+      return normalizeDegrees(degrees);
     }
 
     private function getHourMinuteAngle(

@@ -105,7 +105,11 @@ module Cyberpunk {
     return SportNameMap[sport];
   }
 
-  // TODO: move convert temperature to here
+  public function convertCelsiusToFahrenheit(
+    celsius as Number or Float
+  ) as Number or Float {
+    return (celsius * 9) / 5 + 32;
+  }
 
   function convertMetersToMiles(meters as Number) as Float {
     return meters / 1609.34; // 1 mile = 1609.34 meters
@@ -116,7 +120,7 @@ module Cyberpunk {
     distance as Number, // in meters
     duration as Time.Duration // in seconds
   ) as Float {
-    return (duration.value() / convertMetersToMiles(distance));
+    return duration.value() / convertMetersToMiles(distance);
   }
 
   function convertSecondsToTimeString(seconds as Number) as String {
@@ -130,4 +134,88 @@ module Cyberpunk {
     }
     return time;
   }
+
+  function normalizeDegrees(degrees as Number) as Number {
+    if (degrees < 0) {
+      return degrees + 360;
+    } else if (degrees >= 360) {
+      return degrees - 360;
+    }
+    return degrees;
+  } 
+
+  function convertMetersPerSecondToMilesPerHour(
+    metersPerSecond as Float
+  ) as Float {
+    return metersPerSecond * 2.23694; // 1 m/s = 2.23694 mph
+  }
+
+  // TODO: I need 10 icons
+  const WeatherIcon_Clear = "clear";
+  const WeatherIcon_Cloudy = "cloudy";
+  const WeatherIcon_Rain = "rain";
+  const WeatherIcon_Snow = "snow";
+  const WeatherIcon_Windy = "windy";
+  const WeatherIcon_Thunderstorm = "thunderstorm";
+  const WeatherIcon_Smoke = "smoke";
+  const WeatherIcon_Fog = "fog";
+  const WeatherIcon_Hail = "hail";
+  const WeatherIcon_Unknown = "unknown";
+
+  const WeatherIconMap = [
+    WeatherIcon_Clear, // CONDITION_CLEAR
+    WeatherIcon_Cloudy, // CONDITION_PARTLY_CLOUDY
+    WeatherIcon_Cloudy, // CONDITION_MOSTLY_CLOUDY
+    WeatherIcon_Rain, // CONDITION_RAIN
+    WeatherIcon_Snow, // CONDITION_SNOW
+    WeatherIcon_Windy, // CONDITION_WINDY
+    WeatherIcon_Thunderstorm, // CONDITION_THUNDERSTORM
+    WeatherIcon_Snow, // CONDITION_WINTRY_MIX
+    WeatherIcon_Fog, // CONDITION_FOG
+    WeatherIcon_Windy, // CONDITION_HAZY
+    WeatherIcon_Hail, // CONDITION_HAIL
+    WeatherIcon_Rain, // CONDITION_SCATTERED_SHOWERS
+    WeatherIcon_Thunderstorm, // CONDITION_SCATTERED_THUNDERSTORMS
+    WeatherIcon_Unknown, // CONDITION_UNKNOWN_PRECIPITATION
+    WeatherIcon_Rain, // CONDITION_LIGHT_RAIN
+    WeatherIcon_Rain, // CONDITION_HEAVY_RAIN
+    WeatherIcon_Snow, // CONDITION_LIGHT_SNOW
+    WeatherIcon_Snow, // CONDITION_HEAVY_SNOW
+    WeatherIcon_Snow, // CONDITION_LIGHT_RAIN_SNOW
+    WeatherIcon_Snow, // CONDITION_HEAVY_RAIN_SNOW
+    WeatherIcon_Cloudy, // CONDITION_CLOUDY
+    WeatherIcon_Snow, // CONDITION_RAIN_SNOW
+    WeatherIcon_Clear, // CONDITION_PARTLY_CLEAR
+    WeatherIcon_Clear, // CONDITION_MOSTLY_CLEAR
+    WeatherIcon_Rain, // CONDITION_LIGHT_SHOWERS
+    WeatherIcon_Rain,// CONDITION_SHOWERS
+    WeatherIcon_Rain, // CONDITION_HEAVY_SHOWERS
+    WeatherIcon_Rain, // CONDITION_CHANCE_OF_SHOWERS
+    WeatherIcon_Thunderstorm, // CONDITION_CHANCE_OF_THUNDERSTORMS
+    WeatherIcon_Fog, // CONDITION_MIST
+    WeatherIcon_Smoke, // CONDITION_DUST
+    WeatherIcon_Rain, // CONDITION_DRIZZLE
+    WeatherIcon_Windy, // CONDITION_TORNADO
+    WeatherIcon_Smoke, // CONDITION_SMOKE
+    WeatherIcon_Snow, // CONDITION_ICE
+    WeatherIcon_Smoke, // CONDITION_SAND
+    WeatherIcon_Windy, // CONDITION_SQUALL
+    WeatherIcon_Smoke, // CONDITION_SANDSTORM
+    WeatherIcon_Smoke, // CONDITION_VOLCANIC_ASH
+    WeatherIcon_Smoke, // CONDITION_HAZE
+    WeatherIcon_Clear, // CONDITION_FAIR
+    WeatherIcon_Windy, // CONDITION_HURRICANE
+    WeatherIcon_Rain, // CONDITION_TROPICAL_STORM
+    WeatherIcon_Snow, // CONDITION_CHANCE_OF_SNOW
+    WeatherIcon_Snow, // CONDITION_CHANCE_OF_RAIN_SNOW
+    WeatherIcon_Rain, // CONDITION_CLOUDY_CHANCE_OF_RAIN
+    WeatherIcon_Snow, // CONDITION_CLOUDY_CHANCE_OF_SNOW
+    WeatherIcon_Snow, // CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW
+    WeatherIcon_Snow, // CONDITION_FLURRIES
+    WeatherIcon_Rain, // CONDITION_FREEZING_RAIN
+    WeatherIcon_Hail, // CONDITION_SLEET
+    WeatherIcon_Hail, // CONDITION_ICE_SNOW
+    WeatherIcon_Cloudy, // CONDITION_THIN_CLOUDS
+    WeatherIcon_Unknown, // CONDITION_UNKNOWN
+  ];
 }
