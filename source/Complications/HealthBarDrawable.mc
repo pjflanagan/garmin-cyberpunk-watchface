@@ -104,9 +104,21 @@ module Cyberpunk {
       var percentWidth = (_barWidth * percent) / 100;
 
       dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(X, Y, _barWidth, _bodyBatteryHeight);
+      dc.fillPolygon([
+        [X, Y],
+        [X, Y + _bodyBatteryHeight],
+        [X + _barWidth - 3, Y + _bodyBatteryHeight],
+        [X + _barWidth, Y + _bodyBatteryHeight - 3],
+        [X + _barWidth, Y],
+      ]);
       dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(X, Y, percentWidth, _bodyBatteryHeight);
+      dc.fillPolygon([
+        [X, Y],
+        [X, Y + _bodyBatteryHeight],
+        [X + percentWidth - 3, Y + _bodyBatteryHeight],
+        [X + percentWidth, Y + _bodyBatteryHeight - 3],
+        [X + percentWidth, Y],
+      ]);
     }
 
     private function drawBodyBatteryLabel(dc as Dc) as Void {
@@ -188,7 +200,12 @@ module Cyberpunk {
 
     public function draw(dc as Dc) as Void {
       _model.updateModel();
-      Cyberpunk.drawLabel(dc, _x + _stepsLabelWidth + _gap, _y - 2 * _gap, [12, 18]);
+      Cyberpunk.drawLabel(
+        dc,
+        _x + _stepsLabelWidth + _gap,
+        _y - 2 * _gap,
+        [12, 18]
+      );
       drawStepsLabel(dc);
       drawHeartRate(dc);
       drawSteps(dc);

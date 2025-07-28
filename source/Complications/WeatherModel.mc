@@ -16,6 +16,7 @@ module Cyberpunk {
 
     // CONSIDER: cycle through windSpeed/windBearing, uvIndex, relativeHumidity, and precipitationChance
     public var _precipitationChance as Number?;
+    // TODO: have to do wind speed and direction, (SEE screenshot near map where there is a compass)
 
     private function convertCelsiusToFahrenheit(
       celsius as Number or Float

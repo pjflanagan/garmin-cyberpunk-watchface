@@ -116,13 +116,12 @@ module Cyberpunk {
     public function draw(dc as Dc) as Void {
       _model.updateModel();
 
-      // draw order:
-      // 1. dark red ring
+      // dark red ring
       dc.setColor(Cyberpunk.DARK_RED, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(10);
       dc.drawArc(_x, _y, _radius, Graphics.ARC_CLOCKWISE, 0, 360);
 
-      // 2. dark blue hour ring
+      // dark blue hour ring
       var nextHourAngle = getHourAngle(_model._hourOfDay + 1);
       var currentHourAngle = getHourAngle(_model._hourOfDay);
       dc.setColor(Cyberpunk.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
@@ -136,7 +135,7 @@ module Cyberpunk {
         nextHourAngle
       );
 
-      // 3. blue minute ring
+      // blue minute ring
       var minuteAngle = getHourMinuteAngle(
         _model._hourOfDay,
         _model._minuteOfHour
@@ -155,28 +154,16 @@ module Cyberpunk {
         );
       }
 
-      // 4. red hour-1 ring
-      // dc.setColor(Cyberpunk.RED, Graphics.COLOR_TRANSPARENT);
-      // dc.setPenWidth(8);
-      // dc.drawArc(
-      //   _x,
-      //   _y,
-      //   _radius,
-      //   Graphics.ARC_CLOCKWISE,
-      //   270,
-      //   currentHourAngle
-      // );
-
-      // 5. second ring
+      // second ring
       var secondAngle = getSecondOfMinuteAngle(_model._secondOfMinute);
       dc.setColor(Cyberpunk.RED, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(6);
       dc.drawArc(_x, _y, _radius, Graphics.ARC_CLOCKWISE, 270, secondAngle);
 
-      // 6. last we draw the hour dividers
+      // last we draw the hour dividers
       drawHourDividers(dc);
 
-      // 7. draw sunrise and sunset markers
+      // draw sunrise and sunset markers
       drawSunriseMarker(dc);
       drawSunsetMarker(dc);
     }
