@@ -217,4 +217,19 @@ module Cyberpunk {
     WeatherIcon_Cloudy, // CONDITION_THIN_CLOUDS
     WeatherIcon_Unknown, // CONDITION_UNKNOWN
   ];
+
+  // x and y are the base coordinates, all other coordinates are relative to this
+  function drawPolygon(dc as Graphics.Dc, x as Number, y as Number, pointDeltas as Array<Array<Number>>) as Void {
+    var lastPoint = [x, y];
+    for (var i = 0; i < pointDeltas.size(); i++) {
+      var dx = pointDeltas[i][0];
+      var dy = pointDeltas[i][1];
+      var newX = x + dx;
+      var newY = y + dy;
+      dc.drawLine(lastPoint[0], lastPoint[1], newX, newY);
+      lastPoint = [newX, newY];
+    }
+    // close the polygon
+    dc.drawLine(lastPoint[0], lastPoint[1], x, y);
+  }
 }

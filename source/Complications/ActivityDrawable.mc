@@ -11,6 +11,9 @@ module Cyberpunk {
     private var _offsetX = -64;
     private var _missionOffsetX = 28;
 
+    private var _iconWidth = _missionOffsetX - 2;
+    private var _iconHeight = 16;
+
     public function initialize(
       params as
         {
@@ -45,6 +48,8 @@ module Cyberpunk {
     }
 
     private function drawMissionIcon(dc as Graphics.Dc) as Void {
+      var Y = _y + 18;
+
       var outlineColor = YELLOW;
       var color = DARK_YELLOW;
       if (_model._isComplete) {
@@ -54,9 +59,21 @@ module Cyberpunk {
       dc.setPenWidth(1);
 
       dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(_x + 2, _y + 20, _missionOffsetX - 6, 12);
+      dc.fillPolygon([
+        [_x + 2, Y + 2],
+        [_x + 2, Y + _iconHeight - 9],
+        [_x + 9, Y + _iconHeight - 2],
+        [_x + _iconWidth - 2, Y + _iconHeight - 2],
+        [_x + _iconWidth - 2, Y + 2],
+      ]);
       dc.setColor(outlineColor, Graphics.COLOR_TRANSPARENT);
-      dc.drawRectangle(_x, _y + 18, _missionOffsetX - 2, 16);
+      Cyberpunk.drawPolygon(dc, _x, Y, [
+        [0, _iconHeight - 8],
+        [8, _iconHeight],
+        [_iconWidth, _iconHeight],
+        [_iconWidth, 0],
+      ]);
+
       dc.setColor(BACKGROUND, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _x + _missionOffsetX / 2,

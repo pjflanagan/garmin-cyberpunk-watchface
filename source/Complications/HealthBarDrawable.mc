@@ -179,11 +179,14 @@ module Cyberpunk {
     private function drawHeartRate(dc as Dc) as Void {
       var X = _x + _stepsLabelWidth + _gap;
 
-      dc.setColor(DARK_BLUE, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(X, _y, _heartRateWidth, _heartRateWidth);
       dc.setColor(BLUE, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(_heartRateStrokeWidth);
-      dc.drawRectangle(X, _y, _heartRateWidth, _heartRateWidth);
+      Cyberpunk.drawPolygon(dc, X, _y, [
+        [0, _heartRateWidth - 8],
+        [8, _heartRateWidth],
+        [_heartRateWidth, _heartRateWidth],
+        [_heartRateWidth, 0],
+      ]);
 
       var heartRate = "-";
       if (_model._heartRate != null) {
