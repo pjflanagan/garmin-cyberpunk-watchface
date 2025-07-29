@@ -8,11 +8,13 @@ module Cyberpunk {
 
     private var _x as Number;
     private var _y as Number;
-    private var _offsetX = -64;
-    private var _missionOffsetX = 28;
+    private var _offsetX = -72;
 
-    private var _iconWidth = _missionOffsetX - 2;
+    private var _storylineHeight = 16;
+    private var _missionOffsetX = 8;
+    private var _iconWidth = 21;
     private var _iconHeight = 16;
+    private var _gap = 3;
 
     public function initialize(
       params as
@@ -48,7 +50,8 @@ module Cyberpunk {
     }
 
     private function drawMissionIcon(dc as Graphics.Dc) as Void {
-      var Y = _y + 18;
+      var X = _x + _missionOffsetX + _gap;
+      var Y = _y + _storylineHeight + _gap;
 
       var outlineColor = YELLOW;
       var color = DARK_YELLOW;
@@ -60,14 +63,14 @@ module Cyberpunk {
 
       dc.setColor(color, Graphics.COLOR_TRANSPARENT);
       dc.fillPolygon([
-        [_x + 2, Y + 2],
-        [_x + 2, Y + _iconHeight - 9],
-        [_x + 9, Y + _iconHeight - 2],
-        [_x + _iconWidth - 2, Y + _iconHeight - 2],
-        [_x + _iconWidth - 2, Y + 2],
+        [X + 2, Y + 2],
+        [X + 2, Y + _iconHeight - 9],
+        [X + 9, Y + _iconHeight - 2],
+        [X + _iconWidth - 2, Y + _iconHeight - 2],
+        [X + _iconWidth - 2, Y + 2],
       ]);
       dc.setColor(outlineColor, Graphics.COLOR_TRANSPARENT);
-      Cyberpunk.drawPolygon(dc, _x, Y, [
+      Cyberpunk.drawPolygon(dc, X, Y, [
         [0, _iconHeight - 8],
         [8, _iconHeight],
         [_iconWidth, _iconHeight],
@@ -76,8 +79,8 @@ module Cyberpunk {
 
       dc.setColor(BACKGROUND, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
-        _x + _missionOffsetX / 2,
-        _y + 16,
+        X + _iconWidth / 2 + 3,
+        Y - 2,
         Graphics.FONT_SYSTEM_XTINY,
         "!",
         Graphics.TEXT_JUSTIFY_CENTER
@@ -85,6 +88,9 @@ module Cyberpunk {
     }
 
     private function drawMission(dc as Graphics.Dc) as Void {
+      var X = _x + _missionOffsetX + _iconWidth + 2 * _gap;
+      var Y = _y + _storylineHeight + _gap;
+
       var color = YELLOW;
       if (_model._isComplete) {
         color = GREEN;
@@ -92,16 +98,16 @@ module Cyberpunk {
       dc.setColor(color, Graphics.COLOR_TRANSPARENT);
 
       dc.drawText(
-        _x + _missionOffsetX,
-        _y + 14,
+        X,
+        Y - 4,
         Graphics.FONT_SYSTEM_XTINY,
         _model._displayMission,
         Graphics.TEXT_JUSTIFY_LEFT
       );
       if (_model._displayMissionDetail != null) {
         dc.drawText(
-          _x + _missionOffsetX,
-          _y + 28,
+          X,
+          Y + 10,
           Graphics.FONT_SYSTEM_XTINY,
           _model._displayMissionDetail,
           Graphics.TEXT_JUSTIFY_LEFT

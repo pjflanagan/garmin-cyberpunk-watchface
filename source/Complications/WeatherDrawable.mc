@@ -141,7 +141,7 @@ module Cyberpunk {
       var Y = _y + _humidityBarHeight + _precipitationBarHeight + 3 * _gap + _windSpeedRadius; // center
 
       dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
-      dc.setPenWidth(1);
+      dc.setPenWidth(2);
       dc.drawCircle(X, Y, _windSpeedRadius);
       // var windSpeed = "0";
       // if (_model._windSpeed != null) {
