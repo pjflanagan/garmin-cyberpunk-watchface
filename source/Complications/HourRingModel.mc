@@ -24,24 +24,17 @@ module Cyberpunk {
       _minuteOfHour = clockTime.min;
       _secondOfMinute = clockTime.sec;
 
-      // init sunrise complication
+      // init complications
       _sunriseComplicationId = new Complications.Id(
         Complications.COMPLICATION_TYPE_SUNRISE
       );
-      Complications.getComplication(_sunriseComplicationId);
+      _sunsetComplicationId = new Complications.Id(
+        Complications.COMPLICATION_TYPE_SUNSET
+      );
       Complications.registerComplicationChangeCallback(
         self.method(:onComplicationChanged)
       );
       Complications.subscribeToUpdates(_sunriseComplicationId);
-
-      // init sunset complication
-      _sunsetComplicationId = new Complications.Id(
-        Complications.COMPLICATION_TYPE_SUNSET
-      );
-      Complications.getComplication(_sunsetComplicationId);
-      Complications.registerComplicationChangeCallback(
-        self.method(:onComplicationChanged)
-      );
       Complications.subscribeToUpdates(_sunsetComplicationId);
     }
 

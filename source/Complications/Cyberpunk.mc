@@ -218,6 +218,16 @@ module Cyberpunk {
     WeatherIcon_Unknown, // CONDITION_UNKNOWN
   ];
 
+  function getConditionIcon(condition as Number, isDaytime as Boolean) as String {
+    if (condition < 0 || condition >= WeatherIconMap.size()) {
+      return WeatherIcon_Unknown;
+    } else if (condition == 0) {
+      // Clear condition, append _moon or _sun based on isDaytime
+      return WeatherIcon_Clear + (isDaytime ? "_sun" : "_moon");
+    }
+    return WeatherIconMap[condition];
+  }
+
   // x and y are the base coordinates, all other coordinates are relative to this
   function drawPolygon(dc as Graphics.Dc, x as Number, y as Number, pointDeltas as Array<Array<Number>>) as Void {
     var lastPoint = [x, y];

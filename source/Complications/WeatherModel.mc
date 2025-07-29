@@ -9,16 +9,20 @@ import Toybox.Position;
 
 module Cyberpunk {
   class WeatherModel {
+    public var _currentTemperature as Float?;
     public var _high as Number?;
     public var _low as Number?;
-    public var _currentTemperature as Float?;
-    public var _currentConditions as Number?; // CONDITION_CLEAR, CONDITION_PARTLY_CLOUDY...
 
-    // CONSIDER: cycle through windSpeed/windBearing, uvIndex, relativeHumidity, and precipitationChance
+    public var _currentCondition = WeatherIcon_Unknown; // See WeatherIconMap
+
     public var _precipitationChance as Number?;
-    // TODO: have to do wind speed and direction, (SEE screenshot near map where there is a compass)
-    public var _windDirection as Number?;
-    public var _windSpeed as Float?;
+    public var _humidityPercent as Number?;
+    public var _uvIndex as Number?; // [1, 10]
+
+    public var _windDirection as Number?; // in unit circle degrees
+    public var _windSpeed as Float?; // in mph
+
+    public var _weatherIsActionable = false; // raining, high uv, ...
 
     // Cardinal = windBearing > windDirection
     // North = 0 > 90
@@ -37,14 +41,33 @@ module Cyberpunk {
         return;
       }
 
+      _currentTemperature = convertCelsiusToFahrenheit(currentConditions.feelsLikeTemperature);
       _high = convertCelsiusToFahrenheit(currentConditions.highTemperature);
       _low = convertCelsiusToFahrenheit(currentConditions.lowTemperature);
-      _currentTemperature = convertCelsiusToFahrenheit(currentConditions.feelsLikeTemperature);
-      _currentConditions = currentConditions.condition;
+
+      // TODO: this needs to know if it is day or night
+      _currentCondition = getConditionIcon(currentConditions.condition, true);
+
       _precipitationChance = currentConditions.precipitationChance;
+      _humidityPercent = currentConditions.relativeHumidity;
+      _uvIndex = currentConditions.uvIndex;
 
       _windDirection = convertWindBearingToAngle(currentConditions.windBearing); 
       _windSpeed = convertMetersPerSecondToMilesPerHour(currentConditions.windSpeed);
+
+      if (_precipitationChance != null && _precipitationChance >= 40) {
+        _weatherIsActionable = true;
+      } else if (
+        _currentCondition == WeatherIcon_Thunderstorm ||
+        _currentCondition == WeatherIcon_Hail ||
+        _currentCondition == WeatherIcon_Smoke
+      ) {
+        _weatherIsActionable = true;
+      } else if (_uvIndex != null && _uvIndex >= 3) {
+        _weatherIsActionable = true;
+      } else {
+        _weatherIsActionable = false;
+      }
     }
 
     public function initialize() {

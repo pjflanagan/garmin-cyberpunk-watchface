@@ -77,7 +77,7 @@ module Cyberpunk {
       dc.setColor(BACKGROUND, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _x + _missionOffsetX / 2,
-        _y + 15,
+        _y + 16,
         Graphics.FONT_SYSTEM_XTINY,
         "!",
         Graphics.TEXT_JUSTIFY_CENTER

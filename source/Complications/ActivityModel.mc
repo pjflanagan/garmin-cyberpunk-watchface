@@ -24,7 +24,6 @@ module Cyberpunk {
       _trainingStatusComplicationId = new Complications.Id(
         Complications.COMPLICATION_TYPE_TRAINING_STATUS
       );
-      Complications.getComplication(_trainingStatusComplicationId);
       Complications.registerComplicationChangeCallback(
         self.method(:onComplicationChanged)
       );
