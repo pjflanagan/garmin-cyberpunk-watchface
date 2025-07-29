@@ -24,7 +24,7 @@ module Cyberpunk {
     private var _stepsLabelWidth = 16;
     private var _bodyBatteryLabelsWidth = 16;
 
-    private var _gap = 2;
+    private var _gap = 3;
 
     private var _fullWidth =
       _stepsLabelWidth +

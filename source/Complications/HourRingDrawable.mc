@@ -11,9 +11,7 @@ module Cyberpunk {
     private var _y as Number;
     private var _radius as Number;
 
-    private const _gapDegrees = 2;
     private const _segmentWidth = 3;
-    private const _segmentFullWidth = 6;
 
     public function initialize(
       params as

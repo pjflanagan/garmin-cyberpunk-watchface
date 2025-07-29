@@ -15,9 +15,9 @@ module Cyberpunk {
 
     public var _currentCondition = WeatherIcon_Unknown; // See WeatherIconMap
 
-    public var _precipitationChance as Number?;
-    public var _humidityPercent as Number?;
-    public var _uvIndex as Number?; // [1, 10]
+    public var _precipitationChance as Number = 0;
+    public var _humidityPercent as Number = 0;
+    public var _uvIndex as Float = 0.0; // [1, 10], 0 means unknown
 
     public var _windDirection as Number?; // in unit circle degrees
     public var _windSpeed as Float?; // in mph
@@ -35,9 +35,24 @@ module Cyberpunk {
       return normalizeDegrees(-1 * windBearing + 90);
     }
 
+    private function resetWeather() {
+        _currentTemperature = null;
+        _high = null;
+        _low = null;
+        _currentCondition = WeatherIcon_Unknown;
+        _precipitationChance = 0;
+        _humidityPercent = 0;
+        _uvIndex = 0.0;
+        _windDirection = null;
+        _windSpeed = null;
+        _weatherIsActionable = false;
+
+    }
+
     private function updateWeather() as Void {
       var currentConditions = Weather.getCurrentConditions();
       if (currentConditions == null) {
+        resetWeather();
         return;
       }
 
@@ -71,7 +86,7 @@ module Cyberpunk {
     }
 
     public function initialize() {
-      updateWeather();
+      resetWeather();
     }
 
     public function updateModel() as Void {

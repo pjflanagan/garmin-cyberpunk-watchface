@@ -89,7 +89,7 @@ module Cyberpunk {
         _y + 6,
         Graphics.FONT_SYSTEM_SMALL,
         ":",
-        Graphics.TEXT_JUSTIFY_RIGHT
+        Graphics.TEXT_JUSTIFY_CENTER
       );
       dc.setColor(Cyberpunk.WHITE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
