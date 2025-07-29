@@ -120,7 +120,7 @@ module Cyberpunk {
 
       var color = RED;
       var darkColor = DARK_RED;
-      if (_model._weatherIsActionable) {
+      if (_model._uvIndexIsActionable) {
         color = YELLOW;
         darkColor = DARK_YELLOW;
       }

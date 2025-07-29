@@ -14,15 +14,18 @@ module Cyberpunk {
     public var _low as Number?;
 
     public var _currentCondition = WeatherIcon_Unknown; // See WeatherIconMap
+    public var _conditionIsActionable = false;
 
     public var _precipitationChance as Number = 0;
     public var _humidityPercent as Number = 0;
     public var _uvIndex as Float = 0.0; // [1, 10], 0 means unknown
+    public var _uvIndexIsActionable = false; // raining, high uv, ...
 
     public var _windDirection as Number?; // in unit circle degrees
     public var _windSpeed as Float?; // in mph
 
-    public var _weatherIsActionable = false; // raining, high uv, ...
+    public const DANGEROUS_UV_INDEX_LOWER_BOUND = 3;
+    public const ACTIONABLE_PRECIPITATION_CHANCE = 30;
 
     // Cardinal = windBearing > windDirection
     // North = 0 > 90
@@ -36,17 +39,17 @@ module Cyberpunk {
     }
 
     private function resetWeather() {
-        _currentTemperature = null;
-        _high = null;
-        _low = null;
-        _currentCondition = WeatherIcon_Unknown;
-        _precipitationChance = 0;
-        _humidityPercent = 0;
-        _uvIndex = 0.0;
-        _windDirection = null;
-        _windSpeed = null;
-        _weatherIsActionable = false;
-
+      _currentTemperature = null;
+      _high = null;
+      _low = null;
+      _currentCondition = WeatherIcon_Unknown;
+      _precipitationChance = 0;
+      _humidityPercent = 0;
+      _uvIndex = 0.0;
+      _windDirection = null;
+      _windSpeed = null;
+      _conditionIsActionable = false;
+      _uvIndexIsActionable = false;
     }
 
     private function updateWeather() as Void {
@@ -56,7 +59,9 @@ module Cyberpunk {
         return;
       }
 
-      _currentTemperature = convertCelsiusToFahrenheit(currentConditions.feelsLikeTemperature);
+      _currentTemperature = convertCelsiusToFahrenheit(
+        currentConditions.feelsLikeTemperature
+      );
       _high = convertCelsiusToFahrenheit(currentConditions.highTemperature);
       _low = convertCelsiusToFahrenheit(currentConditions.lowTemperature);
 
@@ -65,24 +70,37 @@ module Cyberpunk {
 
       _precipitationChance = currentConditions.precipitationChance;
       _humidityPercent = currentConditions.relativeHumidity;
+
+      // TODO: the UV index is 0 at night, make sure we check the time
       _uvIndex = currentConditions.uvIndex;
 
-      _windDirection = convertWindBearingToAngle(currentConditions.windBearing); 
-      _windSpeed = convertMetersPerSecondToMilesPerHour(currentConditions.windSpeed);
+      if (_uvIndex != null && _uvIndex >= DANGEROUS_UV_INDEX_LOWER_BOUND) {
+        _uvIndexIsActionable = true;
+      } else {
+        _uvIndexIsActionable = false;
+      }
 
-      if (_precipitationChance != null && _precipitationChance >= 40) {
-        _weatherIsActionable = true;
+      if (
+        _precipitationChance != null &&
+        _precipitationChance >= ACTIONABLE_PRECIPITATION_CHANCE
+      ) {
+        _conditionIsActionable = true;
       } else if (
         _currentCondition == WeatherIcon_Thunderstorm ||
         _currentCondition == WeatherIcon_Hail ||
         _currentCondition == WeatherIcon_Smoke
       ) {
-        _weatherIsActionable = true;
-      } else if (_uvIndex != null && _uvIndex >= 3) {
-        _weatherIsActionable = true;
+        _conditionIsActionable = true;
       } else {
-        _weatherIsActionable = false;
+        // if the weather is not actionable on its own, set it to
+        // whatever the UV index is
+        _conditionIsActionable = _uvIndexIsActionable;
       }
+
+      _windDirection = convertWindBearingToAngle(currentConditions.windBearing);
+      _windSpeed = convertMetersPerSecondToMilesPerHour(
+        currentConditions.windSpeed
+      );
     }
 
     public function initialize() {
