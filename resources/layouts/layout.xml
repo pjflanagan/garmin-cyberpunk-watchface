@@ -15,10 +15,10 @@
     </drawable>
     <drawable id="HealthBar" class="Cyberpunk.HealthBarDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">dc.getHeight() / 2 + 12</param>
+        <param name="y">dc.getHeight() / 2 + 24</param>
     </drawable>
     <drawable id="Activity" class="Cyberpunk.ActivityDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">dc.getHeight() - 72</param>
+        <param name="y">dc.getHeight() - 68</param>
     </drawable>
 </layout>

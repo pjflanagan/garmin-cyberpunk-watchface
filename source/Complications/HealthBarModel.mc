@@ -15,23 +15,31 @@ module Cyberpunk {
     public var _heartRate as Number?;
     public var _heartRateZone as Number;
 
-    public var _stepCount as Number;
+    public var _displayStepCount as String;
     public var _stepsPercent as Number;
 
     public function initialize() {
       _lookupTime = new Time.Duration(24 * 60 * 60);
-      
-      _stepCount = 0;
+
+      _displayStepCount = "0";
       _heartRateZone = 0;
       _stepsPercent = 0;
     }
 
     public function updateSteps() as Void {
       var info = ActivityMonitor.getInfo();
-      _stepCount = info.steps;
+      var stepCount = info.steps;
       var goalPercent =
-        ((_stepCount.toFloat() / info.stepGoal.toFloat()) * 100) as Number;
-      _stepsPercent = min(goalPercent, 100);
+        ((stepCount.toFloat() / info.stepGoal.toFloat()) * 100.0);
+      _stepsPercent = min(goalPercent as Number, 100);
+
+
+      _displayStepCount = stepCount.format("%d");
+      if (stepCount > 1000) {
+        // TODO: this is rounding up. 4951 becomes 5.0K (and I don't like that)
+        // I need to % by 100 first.
+        _displayStepCount = (stepCount / 1000.0).format("%.1f") + "K";
+      }
     }
 
     private function updateBodyBattery() as Void {

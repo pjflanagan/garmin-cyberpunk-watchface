@@ -72,30 +72,30 @@ module Cyberpunk {
     public function drawTime(dc as Dc) as Void {
       dc.setColor(Cyberpunk.BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
-        _timeCenter - 5,
+        _timeCenter - 2,
         _y,
-        Graphics.FONT_SYSTEM_LARGE,
+        Graphics.FONT_SYSTEM_NUMBER_MEDIUM,
         _model._displayHour,
         Graphics.TEXT_JUSTIFY_RIGHT
       );
       // to make the colon blink, we only show it on even seconds
-      var colonColor = Cyberpunk.DARK_BLUE;
-      if (_model._secondOfMinute % 2 == 0) {
-        colonColor = Cyberpunk.DARK_WHITE;
-      }
-      dc.setColor(colonColor, Graphics.COLOR_TRANSPARENT);
-      dc.drawText(
-        _timeCenter,
-        _y + 6,
-        Graphics.FONT_SYSTEM_SMALL,
-        ":",
-        Graphics.TEXT_JUSTIFY_CENTER
-      );
+      // var colonColor = Cyberpunk.DARK_BLUE;
+      // if (_model._secondOfMinute % 2 == 0) {
+      //   colonColor = Cyberpunk.DARK_WHITE;
+      // }
+      // dc.setColor(colonColor, Graphics.COLOR_TRANSPARENT);
+      // dc.drawText(
+      //   _timeCenter,
+      //   _y + 6,
+      //   Graphics.FONT_SYSTEM_SMALL,
+      //   ":",
+      //   Graphics.TEXT_JUSTIFY_CENTER
+      // );
       dc.setColor(Cyberpunk.WHITE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
-        _timeCenter + 3,
+        _timeCenter + 1,
         _y,
-        Graphics.FONT_SYSTEM_LARGE,
+        Graphics.FONT_SYSTEM_NUMBER_MEDIUM,
         _model._displayMinute,
         Graphics.TEXT_JUSTIFY_LEFT
       );

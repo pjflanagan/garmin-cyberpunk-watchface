@@ -11,7 +11,7 @@ module Cyberpunk {
     private var _y as Number;
 
     private var _iconWidth = 30;
-    private var _barWidth = 56;
+    private var _barWidth = 62;
     private var _humidityBarHeight = 2;
     private var _precipitationBarHeight = 8;
     private var _temperatureWidth = 32;
@@ -125,7 +125,7 @@ module Cyberpunk {
         darkColor = DARK_YELLOW;
       }
 
-      for (var i = 0; i < 10; i++) {
+      for (var i = 1; i <= 10; i++) {
         var slotX = _x + i * (_slotWidth + 2);
         if (i <= _model._uvIndex) {
           dc.setColor(color, Graphics.COLOR_TRANSPARENT);
@@ -140,21 +140,20 @@ module Cyberpunk {
       var X = _x + _iconWidth + _barWidth + 2 * _gap - _windSpeedRadius - _gap; // center
       var Y = _y + _humidityBarHeight + _precipitationBarHeight + 3 * _gap + _windSpeedRadius; // center
 
-      dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(2);
       dc.drawCircle(X, Y, _windSpeedRadius);
-      // var windSpeed = "0";
-      // if (_model._windSpeed != null) {
-      //   windSpeed = _model._windSpeed.format("%d");
-      // }
-      // dc.setColor(WHITE, Graphics.COLOR_TRANSPARENT);
-      // dc.drawText(
-      //   X,
-      //   Y - 2 * _gap,
-      //   Graphics.FONT_SYSTEM_XTINY,
-      //   windSpeed,
-      //   Graphics.TEXT_JUSTIFY_CENTER
-      // );
+      var windSpeed = "-";
+      if (_model._windSpeed != null) {
+        windSpeed = _model._windSpeed.format("%d");
+      }
+      dc.drawText(
+        X - _windSpeedRadius - _gap,
+        Y - _windSpeedRadius,
+        Graphics.FONT_SYSTEM_XTINY,
+        windSpeed,
+        Graphics.TEXT_JUSTIFY_RIGHT
+      );
     }
 
     public function draw(dc as Dc) as Void {

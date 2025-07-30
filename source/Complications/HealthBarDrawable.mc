@@ -32,7 +32,7 @@ module Cyberpunk {
       _barWidth +
       2 * _bodyBatteryLabelsWidth +
       4 * _gap;
-    private var _opticalCentering = 8;
+    private var _opticalCentering = 10;
 
     public function initialize(
       params as
@@ -65,17 +65,12 @@ module Cyberpunk {
         color = GREEN;
       }
 
-      var displayText = _model._stepCount.format("%d");
-      if (_model._stepCount > 1000) {
-        displayText = (_model._stepCount / 1000.0).format("%.1f") + "K";
-      }
-
       dc.setColor(color, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         X,
         _y + _heartRateWidth / 2 - 10,
         Graphics.FONT_SYSTEM_XTINY,
-        displayText,
+        _model._displayStepCount,
         Graphics.TEXT_JUSTIFY_RIGHT
       );
     }
@@ -144,7 +139,7 @@ module Cyberpunk {
       dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         X + _gap + _bodyBatteryLabelsWidth,
-        _y,
+        _y - 4,
         Graphics.FONT_SYSTEM_XTINY,
         maxBodyBattery,
         Graphics.TEXT_JUSTIFY_LEFT
