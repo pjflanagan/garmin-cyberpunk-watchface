@@ -11,7 +11,11 @@ module Cyberpunk {
     private var _y as Number;
     private var _radius as Number;
 
-    private const _segmentWidth = 3;
+    // NOTE: half of this goes off screen
+    private const _segmentWidthSmall = 10; // seconds
+    private const _segmentWidthMedium = 14; // hours
+    private const _segmentWidthLarge = 16; // current hour
+    private const _segmentWidthExtraLarge = 20; // sunrise/sunset
 
     public function initialize(
       params as
@@ -59,7 +63,7 @@ module Cyberpunk {
 
     public function drawHourDividers(dc as Dc) as Void {
       dc.setColor(Cyberpunk.BACKGROUND, Graphics.COLOR_TRANSPARENT);
-      dc.setPenWidth(16);
+      dc.setPenWidth(_segmentWidthLarge + 2); // wider to ensure we block everything
       for (var hour = 0; hour < 24; hour++) {
         var angle = getHourAngle(hour);
         dc.drawArc(
@@ -73,11 +77,11 @@ module Cyberpunk {
       }
     }
 
-    private function drawSunriseMarker(dc as Dc) as Void {
+    private function drawSunriseAndSunsetMarkers(dc as Dc) as Void {
+        dc.setColor(Cyberpunk.YELLOW, Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(_segmentWidthExtraLarge);
       if (_model._sunriseSeconds != null) {
         var sunriseAngle = getSecondOfDayAngle(_model._sunriseSeconds);
-        dc.setColor(Cyberpunk.YELLOW, Graphics.COLOR_TRANSPARENT);
-        dc.setPenWidth(_segmentWidth * 2);
         dc.drawArc(
           _x,
           _y,
@@ -87,13 +91,8 @@ module Cyberpunk {
           sunriseAngle - 1
         );
       }
-    }
-
-    private function drawSunsetMarker(dc as Dc) as Void {
       if (_model._sunsetSeconds != null) {
         var sunsetAngle = getSecondOfDayAngle(_model._sunsetSeconds);
-        dc.setColor(Cyberpunk.YELLOW, Graphics.COLOR_TRANSPARENT);
-        dc.setPenWidth(_segmentWidth * 2);
         dc.drawArc(
           _x,
           _y,
@@ -110,14 +109,14 @@ module Cyberpunk {
 
       // dark red ring
       dc.setColor(Cyberpunk.DARK_RED, Graphics.COLOR_TRANSPARENT);
-      dc.setPenWidth(10);
+      dc.setPenWidth(_segmentWidthSmall);
       dc.drawArc(_x, _y, _radius, Graphics.ARC_CLOCKWISE, 0, 360);
 
       // dark blue hour ring
       var nextHourAngle = getHourAngle(_model._hourOfDay + 1);
       var currentHourAngle = getHourAngle(_model._hourOfDay);
       dc.setColor(Cyberpunk.DARK_BLUE, Graphics.COLOR_TRANSPARENT);
-      dc.setPenWidth(16);
+      dc.setPenWidth(_segmentWidthLarge);
       dc.drawArc(
         _x,
         _y,
@@ -135,7 +134,7 @@ module Cyberpunk {
       // don't draw if minute angle is too small, it will draw backward
       if (abs(minuteAngle - currentHourAngle) > 1) {
         dc.setColor(Cyberpunk.BLUE, Graphics.COLOR_TRANSPARENT);
-        dc.setPenWidth(14);
+        dc.setPenWidth(_segmentWidthMedium);
         dc.drawArc(
           _x,
           _y,
@@ -156,8 +155,7 @@ module Cyberpunk {
       drawHourDividers(dc);
 
       // draw sunrise and sunset markers
-      drawSunriseMarker(dc);
-      drawSunsetMarker(dc);
+      drawSunriseAndSunsetMarkers(dc);
     }
   }
 }

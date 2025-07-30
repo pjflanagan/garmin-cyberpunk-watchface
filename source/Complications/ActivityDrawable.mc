@@ -12,7 +12,7 @@ module Cyberpunk {
 
     private var _storylineHeight = 16;
     private var _missionOffsetX = 8;
-    private var _iconWidth = 21;
+    private var _iconWidth = 18;
     private var _iconHeight = 16;
     private var _gap = 3;
 
@@ -52,6 +52,7 @@ module Cyberpunk {
     private function drawMissionIcon(dc as Graphics.Dc) as Void {
       var X = _x + _missionOffsetX + _gap;
       var Y = _y + _storylineHeight + _gap;
+      var indentSize = 6;
 
       var outlineColor = YELLOW;
       var color = DARK_YELLOW;
@@ -64,22 +65,22 @@ module Cyberpunk {
       dc.setColor(color, Graphics.COLOR_TRANSPARENT);
       dc.fillPolygon([
         [X + 2, Y + 2],
-        [X + 2, Y + _iconHeight - 9],
-        [X + 9, Y + _iconHeight - 2],
+        [X + 2, Y + _iconHeight - (indentSize + 1)],
+        [X + (indentSize + 1), Y + _iconHeight - 2],
         [X + _iconWidth - 2, Y + _iconHeight - 2],
         [X + _iconWidth - 2, Y + 2],
       ]);
       dc.setColor(outlineColor, Graphics.COLOR_TRANSPARENT);
       Cyberpunk.drawPolygon(dc, X, Y, [
-        [0, _iconHeight - 8],
-        [8, _iconHeight],
+        [0, _iconHeight - indentSize],
+        [indentSize, _iconHeight],
         [_iconWidth, _iconHeight],
         [_iconWidth, 0],
       ]);
 
       dc.setColor(BACKGROUND, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
-        X + _iconWidth / 2 + 3,
+        X + _iconWidth / 2 + 2,
         Y - 2,
         Graphics.FONT_SYSTEM_XTINY,
         "!",

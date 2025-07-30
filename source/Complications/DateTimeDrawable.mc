@@ -25,8 +25,8 @@ module Cyberpunk {
       _y = params[:y];
       _x = params[:x];
 
-      _dateCenter = _x + 40;
-      _timeCenter = _x - 52;
+      _dateCenter = _x + 48;
+      _timeCenter = _x - 56;
 
       var options = {
         :x => params[:x],
@@ -38,10 +38,12 @@ module Cyberpunk {
     }
 
     public function drawDate(dc as Dc) as Void {
+      var Y = _y + 17;
+
       dc.setColor(Cyberpunk.BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _dateCenter,
-        _y + 7,
+        Y,
         Graphics.FONT_SYSTEM_SMALL,
         _model._month,
         Graphics.TEXT_JUSTIFY_RIGHT
@@ -49,7 +51,7 @@ module Cyberpunk {
       dc.setColor(Cyberpunk.WHITE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _dateCenter + 4,
-        _y + 7,
+        Y,
         Graphics.FONT_SYSTEM_SMALL,
         _model._dayOfMonth,
         Graphics.TEXT_JUSTIFY_LEFT
@@ -62,7 +64,7 @@ module Cyberpunk {
         dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
         dc.fillRectangle(
           _dateCenter - 40 + (day * 10) + 3,
-          _y + 7,
+          Y,
           8,
           3
         );
@@ -78,19 +80,6 @@ module Cyberpunk {
         _model._displayHour,
         Graphics.TEXT_JUSTIFY_RIGHT
       );
-      // to make the colon blink, we only show it on even seconds
-      // var colonColor = Cyberpunk.DARK_BLUE;
-      // if (_model._secondOfMinute % 2 == 0) {
-      //   colonColor = Cyberpunk.DARK_WHITE;
-      // }
-      // dc.setColor(colonColor, Graphics.COLOR_TRANSPARENT);
-      // dc.drawText(
-      //   _timeCenter,
-      //   _y + 6,
-      //   Graphics.FONT_SYSTEM_SMALL,
-      //   ":",
-      //   Graphics.TEXT_JUSTIFY_CENTER
-      // );
       dc.setColor(Cyberpunk.WHITE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         _timeCenter + 1,
@@ -101,8 +90,8 @@ module Cyberpunk {
       );
       dc.setColor(Cyberpunk.DARK_WHITE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
-        _timeCenter + 38,
-        _y + 16,
+        _timeCenter + 46,
+        _y + 8,
         Graphics.FONT_SYSTEM_XTINY,
         _model._amOrPm,
         Graphics.TEXT_JUSTIFY_LEFT

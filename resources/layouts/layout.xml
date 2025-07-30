@@ -7,15 +7,15 @@
     </drawable>
     <drawable id="Weather" class="Cyberpunk.WeatherDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">36</param>
+        <param name="y">40</param>
     </drawable>
     <drawable id="DateTime" class="Cyberpunk.DateTimeDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">dc.getHeight() / 2 - 48</param>
+        <param name="y">dc.getHeight() / 2 - 44</param>
     </drawable>
     <drawable id="HealthBar" class="Cyberpunk.HealthBarDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">dc.getHeight() / 2 + 24</param>
+        <param name="y">dc.getHeight() / 2 + 20</param>
     </drawable>
     <drawable id="Activity" class="Cyberpunk.ActivityDrawable">
         <param name="x">dc.getWidth() / 2</param>
