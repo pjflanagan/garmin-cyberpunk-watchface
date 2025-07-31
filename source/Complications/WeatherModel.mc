@@ -13,7 +13,9 @@ module Cyberpunk {
     public var _high as Number?;
     public var _low as Number?;
 
-    public var _currentCondition = WeatherIcon_Unknown; // See WeatherIconMap
+    // public var _isDaytime = true; // TODO: CONSIDER: do I need to hold onto this?
+
+    public var _currentCondition = UNKNOWN; // See WeatherIconMap
     public var _conditionIsActionable = false;
 
     public var _precipitationChance as Number = 0;
@@ -42,7 +44,7 @@ module Cyberpunk {
       _currentTemperature = null;
       _high = null;
       _low = null;
-      _currentCondition = WeatherIcon_Unknown;
+      _currentCondition = UNKNOWN;
       _precipitationChance = 0;
       _humidityPercent = 0;
       _uvIndex = 0.0;
@@ -53,6 +55,9 @@ module Cyberpunk {
     }
 
     private function updateWeather() as Void {
+      // TODO: make this calculated somehow
+      var isDaytime = true;
+
       var currentConditions = Weather.getCurrentConditions();
       if (currentConditions == null) {
         resetWeather();
@@ -65,8 +70,10 @@ module Cyberpunk {
       _high = convertCelsiusToFahrenheit(currentConditions.highTemperature);
       _low = convertCelsiusToFahrenheit(currentConditions.lowTemperature);
 
-      // TODO: this needs to know if it is day or night
-      _currentCondition = getConditionIcon(currentConditions.condition, true);
+      // maps the condition returned in SDK to one we have an icon for
+      _currentCondition = getMappedWeatherCondition(
+        currentConditions.condition
+      );
 
       _precipitationChance = currentConditions.precipitationChance;
       _humidityPercent = currentConditions.relativeHumidity;
@@ -74,7 +81,11 @@ module Cyberpunk {
       // TODO: the UV index is 0 at night, make sure we check the time
       _uvIndex = currentConditions.uvIndex;
 
-      if (_uvIndex != null && _uvIndex >= DANGEROUS_UV_INDEX_LOWER_BOUND) {
+      if (
+        _uvIndex != null &&
+        _uvIndex >= DANGEROUS_UV_INDEX_LOWER_BOUND &&
+        isDaytime
+      ) {
         _uvIndexIsActionable = true;
       } else {
         _uvIndexIsActionable = false;
@@ -86,9 +97,9 @@ module Cyberpunk {
       ) {
         _conditionIsActionable = true;
       } else if (
-        _currentCondition == WeatherIcon_Thunderstorm ||
-        _currentCondition == WeatherIcon_Hail ||
-        _currentCondition == WeatherIcon_Smoke
+        _currentCondition == THUNDERSTORM ||
+        _currentCondition == HAIL ||
+        _currentCondition == SMOKE
       ) {
         _conditionIsActionable = true;
       } else {

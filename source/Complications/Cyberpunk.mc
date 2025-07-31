@@ -142,7 +142,7 @@ module Cyberpunk {
       return degrees - 360;
     }
     return degrees;
-  } 
+  }
 
   function convertMetersPerSecondToMilesPerHour(
     metersPerSecond as Float
@@ -150,86 +150,90 @@ module Cyberpunk {
     return metersPerSecond * 2.23694; // 1 m/s = 2.23694 mph
   }
 
-  const WeatherIcon_Clear = "clear"; // NOTE: _moon and _sun need to be appended to this
-  const WeatherIcon_Cloudy = "cloudy";
-  const WeatherIcon_Rain = "rain";
-  const WeatherIcon_Snow = "snow";
-  const WeatherIcon_Windy = "windy";
-  const WeatherIcon_Thunderstorm = "thunderstorm";
-  const WeatherIcon_Smoke = "smoke";
-  const WeatherIcon_Fog = "fog";
-  const WeatherIcon_Hail = "hail";
-  const WeatherIcon_Unknown = "unknown";
+  enum WeatherCondition {
+    CLEAR,
+    CLOUDY,
+    RAIN,
+    SNOW,
+    WINDY,
+    THUNDERSTORM,
+    SMOKE,
+    FOG,
+    HAIL,
+    UNKNOWN,
+  }
 
-  const WeatherIconMap = [
-    WeatherIcon_Clear, // CONDITION_CLEAR
-    WeatherIcon_Cloudy, // CONDITION_PARTLY_CLOUDY
-    WeatherIcon_Cloudy, // CONDITION_MOSTLY_CLOUDY
-    WeatherIcon_Rain, // CONDITION_RAIN
-    WeatherIcon_Snow, // CONDITION_SNOW
-    WeatherIcon_Windy, // CONDITION_WINDY
-    WeatherIcon_Thunderstorm, // CONDITION_THUNDERSTORM
-    WeatherIcon_Snow, // CONDITION_WINTRY_MIX
-    WeatherIcon_Fog, // CONDITION_FOG
-    WeatherIcon_Windy, // CONDITION_HAZY
-    WeatherIcon_Hail, // CONDITION_HAIL
-    WeatherIcon_Rain, // CONDITION_SCATTERED_SHOWERS
-    WeatherIcon_Thunderstorm, // CONDITION_SCATTERED_THUNDERSTORMS
-    WeatherIcon_Unknown, // CONDITION_UNKNOWN_PRECIPITATION
-    WeatherIcon_Rain, // CONDITION_LIGHT_RAIN
-    WeatherIcon_Rain, // CONDITION_HEAVY_RAIN
-    WeatherIcon_Snow, // CONDITION_LIGHT_SNOW
-    WeatherIcon_Snow, // CONDITION_HEAVY_SNOW
-    WeatherIcon_Snow, // CONDITION_LIGHT_RAIN_SNOW
-    WeatherIcon_Snow, // CONDITION_HEAVY_RAIN_SNOW
-    WeatherIcon_Cloudy, // CONDITION_CLOUDY
-    WeatherIcon_Snow, // CONDITION_RAIN_SNOW
-    WeatherIcon_Clear, // CONDITION_PARTLY_CLEAR
-    WeatherIcon_Clear, // CONDITION_MOSTLY_CLEAR
-    WeatherIcon_Rain, // CONDITION_LIGHT_SHOWERS
-    WeatherIcon_Rain,// CONDITION_SHOWERS
-    WeatherIcon_Rain, // CONDITION_HEAVY_SHOWERS
-    WeatherIcon_Rain, // CONDITION_CHANCE_OF_SHOWERS
-    WeatherIcon_Thunderstorm, // CONDITION_CHANCE_OF_THUNDERSTORMS
-    WeatherIcon_Fog, // CONDITION_MIST
-    WeatherIcon_Smoke, // CONDITION_DUST
-    WeatherIcon_Rain, // CONDITION_DRIZZLE
-    WeatherIcon_Windy, // CONDITION_TORNADO
-    WeatherIcon_Smoke, // CONDITION_SMOKE
-    WeatherIcon_Snow, // CONDITION_ICE
-    WeatherIcon_Smoke, // CONDITION_SAND
-    WeatherIcon_Windy, // CONDITION_SQUALL
-    WeatherIcon_Smoke, // CONDITION_SANDSTORM
-    WeatherIcon_Smoke, // CONDITION_VOLCANIC_ASH
-    WeatherIcon_Smoke, // CONDITION_HAZE
-    WeatherIcon_Clear, // CONDITION_FAIR
-    WeatherIcon_Windy, // CONDITION_HURRICANE
-    WeatherIcon_Rain, // CONDITION_TROPICAL_STORM
-    WeatherIcon_Snow, // CONDITION_CHANCE_OF_SNOW
-    WeatherIcon_Snow, // CONDITION_CHANCE_OF_RAIN_SNOW
-    WeatherIcon_Rain, // CONDITION_CLOUDY_CHANCE_OF_RAIN
-    WeatherIcon_Snow, // CONDITION_CLOUDY_CHANCE_OF_SNOW
-    WeatherIcon_Snow, // CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW
-    WeatherIcon_Snow, // CONDITION_FLURRIES
-    WeatherIcon_Rain, // CONDITION_FREEZING_RAIN
-    WeatherIcon_Hail, // CONDITION_SLEET
-    WeatherIcon_Hail, // CONDITION_ICE_SNOW
-    WeatherIcon_Cloudy, // CONDITION_THIN_CLOUDS
-    WeatherIcon_Unknown, // CONDITION_UNKNOWN
+  const WeatherConditionMap = [
+    CLEAR, // CONDITION_CLEAR
+    CLOUDY, // CONDITION_PARTLY_CLOUDY
+    CLOUDY, // CONDITION_MOSTLY_CLOUDY
+    RAIN, // CONDITION_RAIN
+    SNOW, // CONDITION_SNOW
+    WINDY, // CONDITION_WINDY
+    THUNDERSTORM, // CONDITION_THUNDERSTORM
+    SNOW, // CONDITION_WINTRY_MIX
+    FOG, // CONDITION_FOG
+    WINDY, // CONDITION_HAZY
+    HAIL, // CONDITION_HAIL
+    RAIN, // CONDITION_SCATTERED_SHOWERS
+    THUNDERSTORM, // CONDITION_SCATTERED_THUNDERSTORMS
+    UNKNOWN, // CONDITION_UNKNOWN_PRECIPITATION
+    RAIN, // CONDITION_LIGHT_RAIN
+    RAIN, // CONDITION_HEAVY_RAIN
+    SNOW, // CONDITION_LIGHT_SNOW
+    SNOW, // CONDITION_HEAVY_SNOW
+    SNOW, // CONDITION_LIGHT_RAIN_SNOW
+    SNOW, // CONDITION_HEAVY_RAIN_SNOW
+    CLOUDY, // CONDITION_CLOUDY
+    SNOW, // CONDITION_RAIN_SNOW
+    CLEAR, // CONDITION_PARTLY_CLEAR
+    CLEAR, // CONDITION_MOSTLY_CLEAR
+    RAIN, // CONDITION_LIGHT_SHOWERS
+    RAIN, // CONDITION_SHOWERS
+    RAIN, // CONDITION_HEAVY_SHOWERS
+    RAIN, // CONDITION_CHANCE_OF_SHOWERS
+    THUNDERSTORM, // CONDITION_CHANCE_OF_THUNDERSTORMS
+    FOG, // CONDITION_MIST
+    SMOKE, // CONDITION_DUST
+    RAIN, // CONDITION_DRIZZLE
+    WINDY, // CONDITION_TORNADO
+    SMOKE, // CONDITION_SMOKE
+    SNOW, // CONDITION_ICE
+    SMOKE, // CONDITION_SAND
+    WINDY, // CONDITION_SQUALL
+    SMOKE, // CONDITION_SANDSTORM
+    SMOKE, // CONDITION_VOLCANIC_ASH
+    SMOKE, // CONDITION_HAZE
+    CLEAR, // CONDITION_FAIR
+    WINDY, // CONDITION_HURRICANE
+    RAIN, // CONDITION_TROPICAL_STORM
+    SNOW, // CONDITION_CHANCE_OF_SNOW
+    SNOW, // CONDITION_CHANCE_OF_RAIN_SNOW
+    RAIN, // CONDITION_CLOUDY_CHANCE_OF_RAIN
+    SNOW, // CONDITION_CLOUDY_CHANCE_OF_SNOW
+    SNOW, // CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW
+    SNOW, // CONDITION_FLURRIES
+    RAIN, // CONDITION_FREEZING_RAIN
+    HAIL, // CONDITION_SLEET
+    HAIL, // CONDITION_ICE_SNOW
+    CLOUDY, // CONDITION_THIN_CLOUDS
+    UNKNOWN, // CONDITION_UNKNOWN
   ];
 
-  function getConditionIcon(condition as Number, isDaytime as Boolean) as String {
-    if (condition < 0 || condition >= WeatherIconMap.size()) {
-      return WeatherIcon_Unknown;
-    } else if (condition == 0) {
-      // Clear condition, append _moon or _sun based on isDaytime
-      return WeatherIcon_Clear + (isDaytime ? "_sun" : "_moon");
+  function getMappedWeatherCondition(condition as Number) as WeatherCondition {
+    if (condition < 0 || condition >= WeatherConditionMap.size()) {
+      return UNKNOWN;
     }
-    return WeatherIconMap[condition];
+    return WeatherConditionMap[condition];
   }
 
   // x and y are the base coordinates, all other coordinates are relative to this
-  function drawPolygon(dc as Graphics.Dc, x as Number, y as Number, pointDeltas as Array<Array<Number>>) as Void {
+  function drawPolygon(
+    dc as Graphics.Dc,
+    x as Number,
+    y as Number,
+    pointDeltas as Array<Array<Number> >
+  ) as Void {
     var lastPoint = [x, y];
     for (var i = 0; i < pointDeltas.size(); i++) {
       var dx = pointDeltas[i][0];

@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
+import Toybox.Application;
 
 module Cyberpunk {
   class WeatherDrawable extends WatchUi.Drawable {
@@ -25,6 +26,10 @@ module Cyberpunk {
     private var _fullWidth =
       _iconWidth + _barWidth + _temperatureWidth + _gap * 3;
 
+    private var _icons as Array<BitmapType>;
+    private var _iconClearDay as BitmapType;
+    private var _iconClearNight as BitmapType;
+
     public function initialize(
       params as
         {
@@ -45,13 +50,45 @@ module Cyberpunk {
         :identifier => params[:identifier],
       };
 
+      _iconClearDay = Application.loadResource(Rez.Drawables.weatherClearDay);
+      _iconClearNight = Application.loadResource(
+        Rez.Drawables.weatherClearNight
+      );
+      _icons = new Array<BitmapType>[UNKNOWN]; // the last of the enum is UNKNOWN
+
+      _icons[CLOUDY] = Application.loadResource(Rez.Drawables.weatherCloudy);
+      _icons[RAIN] = Application.loadResource(Rez.Drawables.weatherRain);
+      _icons[SNOW] = Application.loadResource(Rez.Drawables.weatherSnow);
+      _icons[WINDY] = Application.loadResource(Rez.Drawables.weatherWindy);
+      _icons[FOG] = Application.loadResource(Rez.Drawables.weatherFog);
+      _icons[SMOKE] = Application.loadResource(Rez.Drawables.weatherSmoke);
+      _icons[HAIL] = Application.loadResource(Rez.Drawables.weatherHail);
+      _icons[THUNDERSTORM] = Application.loadResource(
+        Rez.Drawables.weatherThunderstorm
+      );
+
       Drawable.initialize(options);
+    }
+
+    private function getConditionIcon(
+      condition as Number,
+      isDaytime as Boolean
+    ) as BitmapType {
+      if (condition < 0 || condition >= WeatherConditionMap.size()) {
+        return _icons[UNKNOWN];
+      } else if (condition == CLEAR) {
+        if (isDaytime) {
+          return _iconClearDay;
+        } else {
+          return _iconClearNight;
+        }
+      }
+      return _icons[condition];
     }
 
     private function drawTemperature(dc as Graphics.Dc) as Void {
       var X = _x + _fullWidth - _temperatureWidth;
       var centerX = X + _temperatureWidth / 2;
-
 
       dc.setColor(BLUE, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(1);
@@ -59,7 +96,7 @@ module Cyberpunk {
         [0, _temperatureHeight],
         [_temperatureWidth, _temperatureHeight],
         [_temperatureWidth, 8],
-        [_temperatureWidth - 8, 0]
+        [_temperatureWidth - 8, 0],
       ]);
       var temperature = "--°";
       if (_model._currentTemperature != null) {
@@ -102,17 +139,28 @@ module Cyberpunk {
     private function drawHumidityAndPrecipitationChance(dc as Dc) {
       var X = _x + _iconWidth + _gap;
 
-      var humidityPercentWidth = _barWidth * _model._humidityPercent / 100;
+      var humidityPercentWidth = (_barWidth * _model._humidityPercent) / 100;
       dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
       dc.fillRectangle(X, _y, _barWidth, _humidityBarHeight);
       dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
       dc.fillRectangle(X, _y, humidityPercentWidth, _humidityBarHeight);
 
-      var precipitationPercentWidth = _barWidth * _model._precipitationChance / 100;
+      var precipitationPercentWidth =
+        (_barWidth * _model._precipitationChance) / 100;
       dc.setColor(DARK_BLUE, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(X, _y + _humidityBarHeight + _gap, _barWidth, _precipitationBarHeight);
+      dc.fillRectangle(
+        X,
+        _y + _humidityBarHeight + _gap,
+        _barWidth,
+        _precipitationBarHeight
+      );
       dc.setColor(BLUE, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(X, _y + _humidityBarHeight + _gap, precipitationPercentWidth, _precipitationBarHeight);
+      dc.fillRectangle(
+        X,
+        _y + _humidityBarHeight + _gap,
+        precipitationPercentWidth,
+        _precipitationBarHeight
+      );
     }
 
     private function drawUVIndexSlots(dc as Dc) as Void {
@@ -138,7 +186,12 @@ module Cyberpunk {
 
     private function drawWind(dc as Dc) as Void {
       var X = _x + _iconWidth + _barWidth + 2 * _gap - _windSpeedRadius - _gap; // center
-      var Y = _y + _humidityBarHeight + _precipitationBarHeight + 3 * _gap + _windSpeedRadius; // center
+      var Y =
+        _y +
+        _humidityBarHeight +
+        _precipitationBarHeight +
+        3 * _gap +
+        _windSpeedRadius; // center
 
       dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(2);
@@ -156,6 +209,12 @@ module Cyberpunk {
       );
     }
 
+    private function drawCondition(dc as Dc) as Void {
+      // TODO: use if it is daytime
+      var icon = getConditionIcon(_model._currentCondition, true);
+      dc.drawBitmap(_x, _y, icon);
+    }
+
     public function draw(dc as Dc) as Void {
       _model.updateModel();
       Cyberpunk.drawLabel(dc, _x, _y - 2 * _gap, [12, 18]);
@@ -163,6 +222,7 @@ module Cyberpunk {
       drawTemperature(dc);
       drawUVIndexSlots(dc);
       drawWind(dc);
+      drawCondition(dc);
     }
   }
 }

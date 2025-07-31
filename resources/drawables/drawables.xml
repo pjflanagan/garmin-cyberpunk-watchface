@@ -1,4 +1,59 @@
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <!-- TODO: the launcher icon needs to be 40x40, so maybe just make one -->
     <bitmap id="LauncherIcon" filename="cyberpunk_2077_logo.svg" dithering="none" />
+    <bitmap id="weatherClearDay" filename="clear-day.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>        
+    </bitmap>
+    <bitmap id="weatherClearNight" filename="clear-night.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>        
+    </bitmap>
+    <bitmap id="weatherCloudy" filename="cloudy.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>        
+    </bitmap>
+    <bitmap id="weatherRain" filename="rain.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>
+    </bitmap>
+    <bitmap id="weatherSnow" filename="snow.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>
+    </bitmap>
+    <bitmap id="weatherWindy" filename="windy.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>
+    </bitmap>
+    <bitmap id="weatherThunderstorm" filename="thunderstorm.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>
+    </bitmap>
+    <bitmap id="weatherSmoke" filename="error.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>
+    </bitmap>
+    <bitmap id="weatherFog" filename="fog.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>
+    </bitmap>
+    <bitmap id="weatherHail" filename="hail.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>
+    </bitmap>
+    <bitmap id="weatherUnknown" filename="unknown.bmp">
+        <palette>
+            <color>FFFFFF</color>
+        </palette>
+    </bitmap>
 </drawables>
