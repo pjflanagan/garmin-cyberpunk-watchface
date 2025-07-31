@@ -212,7 +212,7 @@ module Cyberpunk {
     private function drawCondition(dc as Dc) as Void {
       // TODO: use if it is daytime
       var icon = getConditionIcon(_model._currentCondition, true);
-      dc.drawBitmap(_x, _y, icon);
+      dc.drawBitmap(_x, _y - 2, icon);
     }
 
     public function draw(dc as Dc) as Void {
