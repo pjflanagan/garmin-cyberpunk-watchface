@@ -162,9 +162,9 @@ module Cyberpunk {
         // 0 1 2 3 4 5 6 7 8 9
         // 4 4 3 3 2 2 1 1 0 0
         var slotHeartRateZone = 4 - Math.floor(i / 2);
-        var color = DARK_BLUE;
+        var color = BLUE;
         if (slotHeartRateZone >= heartRateZone) {
-          color = BLUE;
+          color = DARK_BLUE;
         }
 
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
@@ -175,7 +175,7 @@ module Cyberpunk {
     private function drawHeartRate(dc as Dc) as Void {
       var X = _x + _stepsLabelWidth + _gap;
 
-      dc.setColor(BLUE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(DARK_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(_heartRateStrokeWidth);
       Cyberpunk.drawPolygon(dc, X, _y, [
         [0, _heartRateWidth - 8],
@@ -188,6 +188,7 @@ module Cyberpunk {
       if (_model._heartRate != null) {
         heartRate = _model._heartRate.format("%d");
       }
+      dc.setColor(BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         X + _heartRateWidth / 2,
         _y + _heartRateWidth / 2 - 10,

@@ -15,7 +15,7 @@ module Cyberpunk {
 
     private var _iconWidth = 30;
 
-    private var _barWidth = 62;
+    private var _barWidth = 74;
     private var _uvSlotWidth = (_barWidth - 9) / 10; // 10 slots, 9 gaps of 1px
     private var _uvSlotHeight = 2;
     private var _humidityBarHeight = 2;
@@ -27,12 +27,9 @@ module Cyberpunk {
 
     private var _windSpeedRadius = 9;
 
-    // private var _fullHeight = _humidityBarHeight +
-    //   _precipitationBarHeight +
-    //   2 * _windSpeedRadius +
-    //   3 * _gap;
     private var _fullWidth =
       _iconWidth + _barWidth + _temperatureWidth + _gap * 3;
+    private const _opticalCenter = 4;
 
     private var _icons as Array<BitmapType>;
     private var _actionableIcons as Array<BitmapType>;
@@ -52,7 +49,7 @@ module Cyberpunk {
       _model = new Cyberpunk.WeatherModel();
       _y = params[:y];
 
-      _x = params[:x] - _fullWidth / 2 + 3; // optical center
+      _x = params[:x] - _fullWidth / 2 + _opticalCenter;
 
       var options = {
         :x => params[:x],
@@ -130,7 +127,7 @@ module Cyberpunk {
       var X = _x + _fullWidth - _temperatureWidth;
       var centerX = X + _temperatureWidth / 2;
 
-      dc.setColor(BLUE, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(DARK_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(1);
       Cyberpunk.drawPolygon(dc, X, _y, [
         [0, _temperatureHeight],
@@ -142,6 +139,7 @@ module Cyberpunk {
       if (_model._currentTemperature != null) {
         temperature = _model._currentTemperature.format("%d") + "°";
       }
+      dc.setColor(BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
         centerX,
         _y + 1,
@@ -256,7 +254,7 @@ module Cyberpunk {
     }
 
     private function drawWind(dc as Dc) as Void {
-      var X = _x + _iconWidth + _humidityBarWidth + 2 * _gap + _windSpeedRadius; // center
+      var X = _x + _iconWidth + _humidityBarWidth + 2 * _gap + _windSpeedRadius + 1; // center
       var Y =
         _y +
         _uvSlotHeight +

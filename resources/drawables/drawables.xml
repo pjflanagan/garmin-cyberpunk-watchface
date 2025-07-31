@@ -10,14 +10,14 @@
     </bitmap>
     <bitmap id="actionableWeatherClearDay" filename="clear-day.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>ffaa00</color>
         </palette>        
     </bitmap>
 
     <!-- CLEAR: night -->
     <bitmap id="weatherClearNight" filename="clear-night.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>00f0ff</color>
         </palette>        
     </bitmap>
 
@@ -29,7 +29,7 @@
     </bitmap>
     <bitmap id="actionableWeatherCloudy" filename="cloudy.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>ffaa00</color>
         </palette>        
     </bitmap>
 
@@ -41,7 +41,7 @@
     </bitmap>
     <bitmap id="actionableWeatherRain" filename="rain.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>ffaa00</color>
         </palette>        
     </bitmap>
 
@@ -53,7 +53,7 @@
     </bitmap>
     <bitmap id="actionableWeatherSnow" filename="snow.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>ffaa00</color>
         </palette>        
     </bitmap>
 
@@ -65,7 +65,7 @@
     </bitmap>
     <bitmap id="actionableWeatherWindy" filename="windy.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>ffaa00</color>
         </palette>        
     </bitmap>
 
@@ -77,7 +77,7 @@
     </bitmap>
     <bitmap id="actionableWeatherThunderstorm" filename="thunderstorm.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>ffaa00</color>
         </palette>        
     </bitmap>
 
@@ -89,7 +89,7 @@
     </bitmap>
     <bitmap id="actionableWeatherSmoke" filename="error.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>ffaa00</color>
         </palette>
     </bitmap>
 
@@ -101,7 +101,7 @@
     </bitmap>
     <bitmap id="actionableWeatherFog" filename="fog.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>ffaa00</color>
         </palette>
     </bitmap>
 
@@ -113,7 +113,7 @@
     </bitmap>
     <bitmap id="actionableWeatherHail" filename="hail.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>ffaa00</color>
         </palette>
     </bitmap>
 
@@ -125,7 +125,7 @@
     </bitmap>
     <bitmap id="actionableWeatherUnknown" filename="unknown.bmp">
         <palette>
-            <color>fcee09</color>
+            <color>ffaa00</color>
         </palette>
     </bitmap>
 </drawables>

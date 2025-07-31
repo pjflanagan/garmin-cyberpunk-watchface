@@ -9,8 +9,8 @@ module Cyberpunk {
   var DARK_RED = 0x570114;
   var BLUE = 0x00f0ff;
   var DARK_BLUE = 0x084a4f;
-  var YELLOW = 0xfcee09;
-  var DARK_YELLOW = 0x504904;
+  var YELLOW = 0xffaa00;
+  var DARK_YELLOW = 0xaa5500;
   var GREEN = 0x29f491;
   var DARK_GREEN = 0x005555;
   var WHITE = Graphics.COLOR_WHITE;
