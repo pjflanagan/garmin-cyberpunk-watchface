@@ -1,7 +1,7 @@
 
 # Garmin Cyberpunk Watchface
 
-![Cyberpunk Watchface Preview](concept-art/versions/3.png)
+![Cyberpunk Watchface Preview](concept-art/versions/7.png)
 
 I tend not to like the watch faces that display too much data. But the Cyberpunk aesthetic makes data overload look cool.
 So to show all that data and make it look good, I'm recreating the UI in one of my favorite games Cyberpunk 2077's.

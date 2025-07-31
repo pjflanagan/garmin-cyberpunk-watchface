@@ -16,14 +16,14 @@ module Cyberpunk {
     private var _iconWidth = 30;
 
     private var _barWidth = 62;
+    private var _uvSlotWidth = _barWidth / (10 + 1); // 10 slots with 1 px gap
+    private var _uvSlotHeight = 2;
     private var _humidityBarHeight = 2;
+    private var _humidityBarWidth = _barWidth - 2 * _windSpeedRadius - _gap;
     private var _precipitationBarHeight = 8;
 
     private var _temperatureWidth = 34;
     private var _temperatureHeight = 21;
-
-    private var _slotWidth = 2;
-    private var _slotHeight = 8;
 
     private var _windSpeedRadius = 9;
 
@@ -153,6 +153,10 @@ module Cyberpunk {
       var high = "-";
       if (_model._high != null) {
         high = _model._high.format("%d");
+        if (_model._high >= 100) {
+          // shift to the right if it is 100 or more
+          centerX = centerX + 8;
+        }
       }
       dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
@@ -168,7 +172,7 @@ module Cyberpunk {
       }
       dc.setColor(DARK_BLUE, Graphics.COLOR_TRANSPARENT);
       dc.drawText(
-        centerX + 1,
+        centerX + 2,
         _y + _temperatureHeight,
         Graphics.FONT_SYSTEM_XTINY,
         low,
@@ -176,15 +180,31 @@ module Cyberpunk {
       );
     }
 
-    // TODO: separate these
-    private function drawHumidityAndPrecipitationChance(dc as Dc) {
+    private function drawUVIndexSlots(dc as Dc) as Void {
       var X = _x + _iconWidth + _gap;
+      var Y = _y;
 
-      var humidityPercentWidth = (_barWidth * _model._humidityPercent) / 100;
-      dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(X, _y, _barWidth, _humidityBarHeight);
-      dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
-      dc.fillRectangle(X, _y, humidityPercentWidth, _humidityBarHeight);
+      var color = RED;
+      var darkColor = DARK_RED;
+      if (_model._uvIndexIsActionable) {
+        color = YELLOW;
+        darkColor = DARK_YELLOW;
+      }
+
+      for (var i = 1; i <= 10; i++) {
+        var slotX = X + (i - 1) * (_uvSlotWidth + 1);
+        if (i <= _model._uvIndex) {
+          dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+        } else {
+          dc.setColor(darkColor, Graphics.COLOR_TRANSPARENT);
+        }
+        dc.fillRectangle(slotX, Y, _uvSlotWidth, _uvSlotHeight);
+      }
+    }
+
+    private function drawPrecipitationChance(dc as Dc) {
+      var X = _x + _iconWidth + _gap;
+      var Y = _y + _uvSlotHeight + _gap;
 
       // TODO: if close to 100% switch and make the background blue and the bar yellow
       // because this is more serious
@@ -196,8 +216,9 @@ module Cyberpunk {
       }
       var precipitationPercentWidth =
         (_barWidth * _model._precipitationChance) / 100;
+
       dc.setColor(precipitationColorBack, Graphics.COLOR_TRANSPARENT);
-      Cyberpunk.fillPolygon(dc, X, _y + _humidityBarHeight + _gap, [
+      Cyberpunk.fillPolygon(dc, X, Y, [
         [0, _precipitationBarHeight],
         [_barWidth - 3, _precipitationBarHeight],
         [_barWidth, _precipitationBarHeight - 3],
@@ -208,12 +229,12 @@ module Cyberpunk {
         // draw as a rectangle if it is too small
         dc.fillRectangle(
           X,
-          _y + _humidityBarHeight + _gap,
+          Y,
           precipitationPercentWidth,
           _precipitationBarHeight
         );
       } else {
-        Cyberpunk.fillPolygon(dc, X, _y + _humidityBarHeight + _gap, [
+        Cyberpunk.fillPolygon(dc, X, Y, [
           [0, _precipitationBarHeight],
           [precipitationPercentWidth - 3, _precipitationBarHeight],
           [precipitationPercentWidth, _precipitationBarHeight - 3],
@@ -222,36 +243,27 @@ module Cyberpunk {
       }
     }
 
-    private function drawUVIndexSlots(dc as Dc) as Void {
+    private function drawHumidity(dc as Dc) {
       var X = _x + _iconWidth + _gap;
-      var Y = _y + _humidityBarHeight + _precipitationBarHeight + 2 * _gap;
+      var Y = _y + _uvSlotHeight + _precipitationBarHeight + 2 * _gap + 1;
 
-      var color = RED;
-      var darkColor = DARK_RED;
-      if (_model._uvIndexIsActionable) {
-        color = YELLOW;
-        darkColor = DARK_YELLOW;
-      }
-
-      for (var i = 1; i <= 10; i++) {
-        var slotX = X + (i - 1) * (_slotWidth + 1);
-        if (i <= _model._uvIndex) {
-          dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-        } else {
-          dc.setColor(darkColor, Graphics.COLOR_TRANSPARENT);
-        }
-        dc.fillRectangle(slotX, Y, _slotWidth, _slotHeight);
-      }
+      var humidityPercentWidth =
+        (_humidityBarWidth * _model._humidityPercent) / 100;
+      dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
+      dc.fillRectangle(X, Y, _humidityBarWidth, _humidityBarHeight);
+      dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
+      dc.fillRectangle(X, Y, humidityPercentWidth, _humidityBarHeight);
     }
 
     private function drawWind(dc as Dc) as Void {
-      var X = _x + _iconWidth + _gap + _barWidth - _windSpeedRadius - _gap - 2; // center
+      var X = _x + _iconWidth + _humidityBarWidth + 2 * _gap + _windSpeedRadius; // center
       var Y =
         _y +
-        _humidityBarHeight +
+        _uvSlotHeight +
         _precipitationBarHeight +
-        3 * _gap +
-        _windSpeedRadius; // center
+        2 * _gap +
+        _windSpeedRadius +
+        1; // center
 
       dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
       dc.setPenWidth(2);
@@ -262,7 +274,7 @@ module Cyberpunk {
       }
       dc.drawText(
         X - _windSpeedRadius - _gap,
-        Y - _windSpeedRadius + 2,
+        Y - _windSpeedRadius,
         Graphics.FONT_SYSTEM_XTINY,
         windSpeed,
         Graphics.TEXT_JUSTIFY_RIGHT
@@ -282,7 +294,8 @@ module Cyberpunk {
     public function draw(dc as Dc) as Void {
       _model.updateModel();
       Cyberpunk.drawLabel(dc, _x, _y - 2 * _gap, [12, 18]);
-      drawHumidityAndPrecipitationChance(dc);
+      drawHumidity(dc);
+      drawPrecipitationChance(dc);
       drawTemperature(dc);
       drawUVIndexSlots(dc);
       drawWind(dc);
