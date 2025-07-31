@@ -32,7 +32,7 @@ module Cyberpunk {
       _barWidth +
       2 * _bodyBatteryLabelsWidth +
       4 * _gap;
-    private var _opticalCentering = 10;
+    private var _opticalCentering = 13;
 
     public function initialize(
       params as

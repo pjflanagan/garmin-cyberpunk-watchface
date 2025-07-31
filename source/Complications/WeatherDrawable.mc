@@ -16,7 +16,7 @@ module Cyberpunk {
     private var _iconWidth = 30;
 
     private var _barWidth = 62;
-    private var _uvSlotWidth = _barWidth / (10 + 1); // 10 slots with 1 px gap
+    private var _uvSlotWidth = (_barWidth - 9) / 10; // 10 slots, 9 gaps of 1px
     private var _uvSlotHeight = 2;
     private var _humidityBarHeight = 2;
     private var _humidityBarWidth = _barWidth - 2 * _windSpeedRadius - _gap;

@@ -11,11 +11,11 @@
     </drawable>
     <drawable id="DateTime" class="Cyberpunk.DateTimeDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">dc.getHeight() / 2 - 44</param>
+        <param name="y">dc.getHeight() / 2 - 46</param>
     </drawable>
     <drawable id="HealthBar" class="Cyberpunk.HealthBarDrawable">
         <param name="x">dc.getWidth() / 2</param>
-        <param name="y">dc.getHeight() / 2 + 20</param>
+        <param name="y">dc.getHeight() / 2 + 18</param>
     </drawable>
     <drawable id="Activity" class="Cyberpunk.ActivityDrawable">
         <param name="x">dc.getWidth() / 2</param>
