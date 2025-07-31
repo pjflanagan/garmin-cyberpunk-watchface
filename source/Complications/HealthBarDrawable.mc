@@ -99,20 +99,21 @@ module Cyberpunk {
       var percentWidth = (_barWidth * percent) / 100;
 
       dc.setColor(DARK_RED, Graphics.COLOR_TRANSPARENT);
-      dc.fillPolygon([
-        [X, Y],
-        [X, Y + _bodyBatteryHeight],
-        [X + _barWidth - 3, Y + _bodyBatteryHeight],
-        [X + _barWidth, Y + _bodyBatteryHeight - 3],
-        [X + _barWidth, Y],
+      Cyberpunk.fillPolygon(dc, X, Y, [
+        [0, _bodyBatteryHeight],
+        [_barWidth - 3, _bodyBatteryHeight],
+        [_barWidth, _bodyBatteryHeight - 3],
+        [_barWidth, 0],
       ]);
       dc.setColor(RED, Graphics.COLOR_TRANSPARENT);
-      dc.fillPolygon([
-        [X, Y],
-        [X, Y + _bodyBatteryHeight],
-        [X + percentWidth - 3, Y + _bodyBatteryHeight],
-        [X + percentWidth, Y + _bodyBatteryHeight - 3],
-        [X + percentWidth, Y],
+      if (percentWidth < 20) {
+        dc.fillRectangle(X, Y, percentWidth, _bodyBatteryHeight);
+      }
+      Cyberpunk.fillPolygon(dc, X, Y, [
+        [0, _bodyBatteryHeight],
+        [percentWidth - 3, _bodyBatteryHeight],
+        [percentWidth, _bodyBatteryHeight - 3],
+        [percentWidth, 0],
       ]);
     }
 

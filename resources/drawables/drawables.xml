@@ -1,59 +1,131 @@
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <!-- TODO: the launcher icon needs to be 40x40, so maybe just make one -->
     <bitmap id="LauncherIcon" filename="cyberpunk_2077_logo.svg" dithering="none" />
+
+    <!-- CLEAR: day -->
     <bitmap id="weatherClearDay" filename="clear-day.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>00f0ff</color>
         </palette>        
     </bitmap>
+    <bitmap id="actionableWeatherClearDay" filename="clear-day.bmp">
+        <palette>
+            <color>fcee09</color>
+        </palette>        
+    </bitmap>
+
+    <!-- CLEAR: night -->
     <bitmap id="weatherClearNight" filename="clear-night.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>fcee09</color>
         </palette>        
     </bitmap>
+
+    <!-- CLOUDY -->
     <bitmap id="weatherCloudy" filename="cloudy.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>00f0ff</color>
         </palette>        
     </bitmap>
+    <bitmap id="actionableWeatherCloudy" filename="cloudy.bmp">
+        <palette>
+            <color>fcee09</color>
+        </palette>        
+    </bitmap>
+
+    <!-- RAIN -->
     <bitmap id="weatherRain" filename="rain.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>00f0ff</color>
         </palette>
     </bitmap>
+    <bitmap id="actionableWeatherRain" filename="rain.bmp">
+        <palette>
+            <color>fcee09</color>
+        </palette>        
+    </bitmap>
+
+    <!-- SNOW -->
     <bitmap id="weatherSnow" filename="snow.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>00f0ff</color>
         </palette>
     </bitmap>
+    <bitmap id="actionableWeatherSnow" filename="snow.bmp">
+        <palette>
+            <color>fcee09</color>
+        </palette>        
+    </bitmap>
+
+    <!-- WINDY -->
     <bitmap id="weatherWindy" filename="windy.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>00f0ff</color>
         </palette>
     </bitmap>
+    <bitmap id="actionableWeatherWindy" filename="windy.bmp">
+        <palette>
+            <color>fcee09</color>
+        </palette>        
+    </bitmap>
+
+    <!-- THUNDERSTORM -->
     <bitmap id="weatherThunderstorm" filename="thunderstorm.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>00f0ff</color>
         </palette>
     </bitmap>
+    <bitmap id="actionableWeatherThunderstorm" filename="thunderstorm.bmp">
+        <palette>
+            <color>fcee09</color>
+        </palette>        
+    </bitmap>
+
+    <!-- SMOKE -->
     <bitmap id="weatherSmoke" filename="error.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>00f0ff</color>
         </palette>
     </bitmap>
+    <bitmap id="actionableWeatherSmoke" filename="error.bmp">
+        <palette>
+            <color>fcee09</color>
+        </palette>
+    </bitmap>
+
+    <!-- FOG -->
     <bitmap id="weatherFog" filename="fog.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>00f0ff</color>
         </palette>
     </bitmap>
+    <bitmap id="actionableWeatherFog" filename="fog.bmp">
+        <palette>
+            <color>fcee09</color>
+        </palette>
+    </bitmap>
+
+    <!-- HAIL -->
     <bitmap id="weatherHail" filename="hail.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>00f0ff</color>
         </palette>
     </bitmap>
+    <bitmap id="actionableWeatherHail" filename="hail.bmp">
+        <palette>
+            <color>fcee09</color>
+        </palette>
+    </bitmap>
+
+    <!-- UNKNOWN -->
     <bitmap id="weatherUnknown" filename="unknown.bmp">
         <palette>
-            <color>FFFFFF</color>
+            <color>00f0ff</color>
+        </palette>
+    </bitmap>
+    <bitmap id="actionableWeatherUnknown" filename="unknown.bmp">
+        <palette>
+            <color>fcee09</color>
         </palette>
     </bitmap>
 </drawables>

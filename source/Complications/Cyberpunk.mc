@@ -246,4 +246,21 @@ module Cyberpunk {
     // close the polygon
     dc.drawLine(lastPoint[0], lastPoint[1], x, y);
   }
+
+  function fillPolygon(
+    dc as Graphics.Dc,
+    x as Number,
+    y as Number,
+    pointDeltas as Array<Array<Number> >
+  ) as Void {
+    var points = new [pointDeltas.size() + 1];
+    for (var i = 0; i < pointDeltas.size(); i++) {
+      var dx = pointDeltas[i][0];
+      var dy = pointDeltas[i][1];
+      points[i] = [x + dx, y + dy];
+    }
+    // close the polygon
+    points[pointDeltas.size()] = [x, y];
+    dc.fillPolygon(points);
+  }
 }

@@ -58,15 +58,17 @@ module Cyberpunk {
       );
       for (var day = 0; day < 7; day++) {
         var barColor = Cyberpunk.DARK_RED;
+        var addedHeight = 0;
         if (day == _model._dayOfWeek) {
           barColor = Cyberpunk.BLUE;
+          addedHeight = 1;
         }
         dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
         dc.fillRectangle(
           _dateCenter - 40 + (day * 10) + 3,
-          Y,
+          Y - addedHeight,
           8,
-          3
+          3 + addedHeight
         );
       }
     }

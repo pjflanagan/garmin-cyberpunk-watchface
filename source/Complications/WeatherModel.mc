@@ -19,6 +19,7 @@ module Cyberpunk {
     public var _conditionIsActionable = false;
 
     public var _precipitationChance as Number = 0;
+    public var _precipitationIsActionable = false;
     public var _humidityPercent as Number = 0;
     public var _uvIndex as Float = 0.0; // [1, 10], 0 means unknown
     public var _uvIndexIsActionable = false; // raining, high uv, ...
@@ -75,12 +76,20 @@ module Cyberpunk {
         currentConditions.condition
       );
 
-      _precipitationChance = currentConditions.precipitationChance;
       _humidityPercent = currentConditions.relativeHumidity;
+
+      _precipitationChance = currentConditions.precipitationChance;
+      if (
+        _precipitationChance != null &&
+        _precipitationChance >= ACTIONABLE_PRECIPITATION_CHANCE
+      ) {
+        _precipitationIsActionable = true;
+      } else { 
+        _precipitationIsActionable = false;
+      }
 
       // TODO: the UV index is 0 at night, make sure we check the time
       _uvIndex = currentConditions.uvIndex;
-
       if (
         _uvIndex != null &&
         _uvIndex >= DANGEROUS_UV_INDEX_LOWER_BOUND &&
@@ -92,11 +101,6 @@ module Cyberpunk {
       }
 
       if (
-        _precipitationChance != null &&
-        _precipitationChance >= ACTIONABLE_PRECIPITATION_CHANCE
-      ) {
-        _conditionIsActionable = true;
-      } else if (
         _currentCondition == THUNDERSTORM ||
         _currentCondition == HAIL ||
         _currentCondition == SMOKE
@@ -105,7 +109,8 @@ module Cyberpunk {
       } else {
         // if the weather is not actionable on its own, set it to
         // whatever the UV index is
-        _conditionIsActionable = _uvIndexIsActionable;
+        _conditionIsActionable = _uvIndexIsActionable || 
+          _precipitationIsActionable;
       }
 
       _windDirection = convertWindBearingToAngle(currentConditions.windBearing);
